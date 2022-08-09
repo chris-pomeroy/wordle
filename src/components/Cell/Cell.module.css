@@ -1,6 +1,7 @@
 .cell {
     width: 4rem;
     height: 4rem;
-    margin: 1rem;
-    background-color: white;
+    margin: .1rem;
+    background-color: #282c34;
+    border: 1px solid black;
 }
