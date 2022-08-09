@@ -1,0 +1,11 @@
+.board {
+    background-color: grey;
+    box-sizing: border-box;
+    padding: 3rem;
+    border-radius: 2rem;
+    max-width: 90vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
