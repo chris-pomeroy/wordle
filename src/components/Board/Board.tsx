@@ -14,7 +14,7 @@ const Board = () => {
 
     const keyHandler = ({key}: KeyboardEvent) => {
 
-        if (key === "Enter") {
+        if (key === "Enter" && row.current < 5) {
             row.current = row.current + 1
         }
 
