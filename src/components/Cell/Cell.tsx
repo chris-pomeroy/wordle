@@ -1,7 +1,9 @@
 import styles from './Cell.module.css'
 
-const cell = () => {
-    return <div className={styles.cell}></div>
+type Props = {
+    letter: string
 }
 
-export default cell;
+const Cell = ({letter} : Props) => <div className={styles.cell}>{letter}</div>
+
+export default Cell;
