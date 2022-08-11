@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Row from '../Row/Row';
 import styles from './Board.module.css';
 
@@ -35,7 +35,7 @@ const Board = () => {
                 const result = clone(prev)
                 const currentRow = result[row]
                 const answer = ANSWER.split('')
-                currentRow.map((node, index) => {
+                currentRow.forEach((node, index) => {
                     const answerIndex = answer.indexOf(node.letter)
                     if (node.letter === answer[index]) {
                         answer[index] = ''
