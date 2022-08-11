@@ -30,7 +30,7 @@ const Board = () => {
     const keyHandler = ({key}: KeyboardEvent) => {
         console.log(key)
 
-        if (key === "Enter" && row < 5) {
+        if (key === "Enter" && row < 6) {
             setRows(prev => {
                 const result = clone(prev)
                 const currentRow = result[row]
