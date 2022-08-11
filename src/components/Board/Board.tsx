@@ -1,6 +1,4 @@
-import { isLabelWithInternallyDisabledControl } from '@testing-library/user-event/dist/utils';
 import { useEffect, useRef, useState } from 'react';
-import Cell from '../Cell/Cell';
 import Row from '../Row/Row';
 import styles from './Board.module.css';
 
@@ -25,10 +23,10 @@ const Board = () => {
         return () => document.removeEventListener("keydown", keyHandler)
     }, [rows, row])
 
+    const ANSWER = "ALLOW"
+
     const clone = (nodes: node[][]) : node[][] => nodes.map(word => word.map(cell => {return {...cell}}))
     
-    const randomColour = () => ['', 'yellow', 'green'][Math.floor(Math.random() * 3)]
-
     const keyHandler = ({key}: KeyboardEvent) => {
         console.log(key)
 
@@ -36,7 +34,17 @@ const Board = () => {
             setRows(prev => {
                 const result = clone(prev)
                 const currentRow = result[row]
-                currentRow.map(node => node.colour = randomColour())
+                const answer = ANSWER.split('');
+                currentRow.map((node, index) => {
+                    const answerIndex = answer.indexOf(node.letter)
+                    if (node.letter === answer[index]) {
+                        answer[index] = ''
+                        node.colour = 'green'
+                    } else if (answerIndex !== -1) {
+                        answer[answerIndex] = ''
+                        node.colour = 'yellow'
+                    }
+                })
                 return result
             })
             setRow(prev => prev + 1)
