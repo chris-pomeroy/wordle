@@ -34,7 +34,7 @@ const Board = () => {
             setRows(prev => {
                 const result = clone(prev)
                 const currentRow = result[row]
-                const answer = ANSWER.split('');
+                const answer = ANSWER.split('')
                 currentRow.map((node, index) => {
                     const answerIndex = answer.indexOf(node.letter)
                     if (node.letter === answer[index]) {
