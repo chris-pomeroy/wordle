@@ -1,9 +1,10 @@
+import { node } from '../Board/Board'
 import styles from './Cell.module.css'
 
 type Props = {
-    letter: string
+    node: node
 }
 
-const Cell = ({letter} : Props) => <div className={styles.cell}>{letter}</div>
+const Cell = ({node} : Props) => <div className={`${styles.cell} ${styles[node.colour]}`}>{node.letter}</div>
 
 export default Cell;

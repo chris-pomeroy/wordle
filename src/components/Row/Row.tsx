@@ -3,13 +3,13 @@ import Cell from '../Cell/Cell';
 import styles from './Row.module.css'
 
 type Props = {
-    word: node[]
+    nodes: node[]
 }
 
-const Row = ({word}: Props) => (
+const Row = ({nodes}: Props) => (
     <div className={styles.row}>
         {
-            word.map((node, index) => <Cell key={index} letter={node.letter}/>)
+            nodes.map((node, index) => <Cell key={index} node={node}/>)
         }
     </div>
 )

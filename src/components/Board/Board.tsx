@@ -25,16 +25,26 @@ const Board = () => {
         return () => document.removeEventListener("keydown", keyHandler)
     }, [rows, row])
 
+    const clone = (nodes: node[][]) : node[][] => nodes.map(word => word.map(cell => {return {...cell}}))
+    
+    const randomColour = () => ['', 'yellow', 'green'][Math.floor(Math.random() * 3)]
+
     const keyHandler = ({key}: KeyboardEvent) => {
         console.log(key)
 
         if (key === "Enter" && row < 5) {
+            setRows(prev => {
+                const result = clone(prev)
+                const currentRow = result[row]
+                currentRow.map(node => node.colour = randomColour())
+                return result
+            })
             setRow(prev => prev + 1)
         }
 
-        if (key === "Backspace") {
+        if (key === "Backspace" && rows[row][0].letter !== '') {
             setRows(prev => {
-                const result: node[][] = prev.map(word => word.map(cell => {return {...cell}}))
+                const result = clone(prev)
                 let lastIndex = result[row].findIndex(cell => cell.letter === '')
                 lastIndex = lastIndex === -1 ? result[row].length : lastIndex
                 result[row][lastIndex - 1].letter = ''
@@ -45,7 +55,7 @@ const Board = () => {
         key = key.toUpperCase()
         if (key.match(`^[A-Z]$`) && rows[row].some(cell => cell.letter === '')) {
             setRows(prev => {
-                const result: node[][] = prev.map(word => word.map(cell => {return {...cell}}))
+                const result = clone(prev)
                 const currentRow = result[row]
                 currentRow[currentRow.findIndex(cell => cell.letter === '')].letter = key
                 return result
@@ -57,7 +67,7 @@ const Board = () => {
     return (
         <div className={styles.board}>
             {
-                rows.map((row, index) => <Row key={index} word={row} />)
+                rows.map((row, index) => <Row key={index} nodes={row} />)
             }
         </div>
     )

@@ -9,3 +9,11 @@
     justify-content: center;
     font-weight: bold;
 }
+
+.green {
+    background-color: #538d4e;
+}
+
+.yellow {
+    background-color: #b59f3b;
+}
