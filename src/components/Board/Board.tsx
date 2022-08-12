@@ -80,8 +80,8 @@ const Board = () => {
     
     const keyboardEventHandler = ({key}: KeyboardEvent) => {
         switch(key) {
-            case "Enter": enterKeyHandler(); break;
-            case "Backspace": backspaceKeyHandler(); break;
+            case "Enter": enterKeyHandler(); return
+            case "Backspace": backspaceKeyHandler(); return
             default: keyHandler(key)
         }
     }
