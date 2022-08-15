@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import getNextAnswer from '../../services/Answers';
 import Row from '../Row/Row';
 import styles from './Board.module.css';
 
@@ -17,13 +18,12 @@ const Board = () => {
     })))
 
     const [row, setRow] = useState(0)
+    const [answer] = useState(() => getNextAnswer())
 
     useEffect(() => {
         document.addEventListener("keydown", keyboardEventHandler)
         return () => document.removeEventListener("keydown", keyboardEventHandler)
     }, [rows, row])
-
-    const ANSWER = "ALLOW"
 
     const clone = (nodes: node[][]) : node[][] => nodes.map(word => word.map(cell => {return {...cell}}))
 
@@ -33,15 +33,15 @@ const Board = () => {
         }
 
         setRows(prev => {
-            const answer = ANSWER.split('')
+            const answerLetters = answer.split('')
             const result = clone(prev)
             result[row].forEach((node, index) => {
                 const answerIndex = answer.indexOf(node.letter)
                 if (node.letter === answer[index]) {
-                    answer[index] = ''
+                    answerLetters[index] = ''
                     node.colour = 'green'
                 } else if (answerIndex !== -1) {
-                    answer[answerIndex] = ''
+                    answerLetters[answerIndex] = ''
                     node.colour = 'yellow'
                 }
             })
