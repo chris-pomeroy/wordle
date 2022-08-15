@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import getNextAnswer from '../../services/Answers';
-import Row from '../Row/Row';
+import getNextAnswer from '../services/Answers';
+import Row from './Row';
 import styles from './Board.module.css';
 
 export type node = {
@@ -36,11 +36,14 @@ const Board = () => {
             const answerLetters = answer.split('')
             const result = clone(prev)
             result[row].forEach((node, index) => {
-                const answerIndex = answer.indexOf(node.letter)
-                if (node.letter === answer[index]) {
+                if (node.letter === answerLetters[index]) {
                     answerLetters[index] = ''
                     node.colour = 'green'
-                } else if (answerIndex !== -1) {
+                } 
+            })
+            result[row].forEach((node) => {
+                const answerIndex = answerLetters.indexOf(node.letter)
+                if (answerIndex !== -1) {
                     answerLetters[answerIndex] = ''
                     node.colour = 'yellow'
                 }

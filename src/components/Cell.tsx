@@ -1,4 +1,4 @@
-import { node } from '../Board/Board'
+import { node } from './Board'
 import styles from './Cell.module.css'
 
 type Props = {

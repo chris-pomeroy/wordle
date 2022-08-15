@@ -1,5 +1,5 @@
-import { node } from '../Board/Board';
-import Cell from '../Cell/Cell';
+import { node } from './Board';
+import Cell from './Cell';
 import styles from './Row.module.css'
 
 type Props = {
