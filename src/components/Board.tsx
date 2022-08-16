@@ -3,80 +3,47 @@ import Row from './Row';
 import styles from './Board.module.css';
 import useAnswers from '../services/Answers';
 
-export type node = {
-    colour: string,
-    letter: string
-}
-
 const Board = () => {
 
-    const [rows, setRows] = useState<node[][]>(Array(6).fill([]).map(() => Array(5).fill({}).map(() => {
-        return {
-            colour: "", 
-            letter: ""
-        }
-    })))
+    const [guesses, setGuesses] = useState<string[]>(Array(6).fill(""))
 
-    const [row, setRow] = useState(0)
-    const {answer, isValidAnswer} = useAnswers()
+    const [currentRow, setCurrentRow] = useState(0)
+    const {isGuessCorrect, isGuessValid} = useAnswers()
 
     useEffect(() => {
         document.addEventListener("keydown", keyboardEventHandler)
         return () => document.removeEventListener("keydown", keyboardEventHandler)
-    }, [rows, row])
-
-    const clone = (nodes: node[][]) : node[][] => nodes.map(word => word.map(cell => {return {...cell}}))
+    }, [currentRow, guesses])
 
     const enterKeyHandler = () => {
-        if (row > 5 || rows[row].some(cell => cell.letter === '') || !isValidAnswer(rows[row])) {
+        if (currentRow > 5 || guesses[currentRow].length < 5 || !isGuessValid(guesses[currentRow])) {
             return
         }
 
-        setRows(prev => {
-            const answerLetters = answer.split('')
-            const result = clone(prev)
-            result[row].forEach((node, index) => {
-                if (node.letter === answerLetters[index]) {
-                    answerLetters[index] = ''
-                    node.colour = 'green'
-                } 
-            })
-            result[row].forEach((node) => {
-                const answerIndex = answerLetters.indexOf(node.letter)
-                if (answerIndex !== -1) {
-                    answerLetters[answerIndex] = ''
-                    node.colour = 'yellow'
-                }
-            })
-            return result
-        })
-        setRow(prev => prev + 1)
+        setCurrentRow(prev => prev + 1)
     }
 
     const backspaceKeyHandler = () => {
-        if (rows[row][0].letter === '') {
+        if (guesses[currentRow].length === 0) {
             return
         }
 
-        setRows(prev => {
-            const result = clone(prev)
-            let lastIndex = result[row].findIndex(cell => cell.letter === '')
-            lastIndex = lastIndex === -1 ? result[row].length : lastIndex
-            result[row][lastIndex - 1].letter = ''
+        setGuesses(prev => {
+            const result = [...prev]
+            result[currentRow] = result[currentRow].slice(0, -1)
             return result
         })
     }
 
     const keyHandler = (key: string) => {
         key = key.toUpperCase()
-        if (!key.match(`^[A-Z]$`) || rows[row].every(cell => cell.letter !== '')) {
+        if (!key.match(`^[A-Z]$`) || guesses[currentRow].length > 4) {
             return
         }
 
-        setRows(prev => {
-            const result = clone(prev)
-            const currentRow = result[row]
-            currentRow[currentRow.findIndex(cell => cell.letter === '')].letter = key
+        setGuesses(prev => {
+            const result = [...prev]
+            result[currentRow] += key
             return result
         })
     }
@@ -96,7 +63,7 @@ const Board = () => {
     return (
         <div className={styles.board}>
             {
-                rows.map((row, index) => <Row key={index} nodes={row} />)
+                guesses.map((guess, index) => <Row key={index} guess={guess} />)
             }
         </div>
     )

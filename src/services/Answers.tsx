@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { node } from '../components/Board'
 import answers from '../resources/answers.json'
 
 const useAnswers = () => {
@@ -7,9 +6,10 @@ const useAnswers = () => {
     const [answer] = useState(answers[Math.floor(Math.random() * answers.length)])
     const [answerList] = useState(new Set(answers))
 
-    const isValidAnswer = (answer: node[]) => answerList.has(answer.map(node => node.letter).join(''))
+    const isGuessCorrect = (guess: string) => answer === guess
+    const isGuessValid = (guess: string) => answerList.has(guess)
 
-    return {answer, isValidAnswer}
+    return {isGuessCorrect, isGuessValid}
 }
 
 export default useAnswers
