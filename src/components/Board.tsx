@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import getNextAnswer from '../services/Answers';
 import Row from './Row';
 import styles from './Board.module.css';
+import useAnswers from '../services/Answers';
 
 export type node = {
     colour: string,
@@ -18,7 +18,7 @@ const Board = () => {
     })))
 
     const [row, setRow] = useState(0)
-    const [answer] = useState(() => getNextAnswer())
+    const {answer, isValidAnswer} = useAnswers()
 
     useEffect(() => {
         document.addEventListener("keydown", keyboardEventHandler)
@@ -28,7 +28,7 @@ const Board = () => {
     const clone = (nodes: node[][]) : node[][] => nodes.map(word => word.map(cell => {return {...cell}}))
 
     const enterKeyHandler = () => {
-        if (row > 5 || rows[row].some(cell => cell.letter === '')) {
+        if (row > 5 || rows[row].some(cell => cell.letter === '') || !isValidAnswer(rows[row])) {
             return
         }
 
@@ -81,11 +81,15 @@ const Board = () => {
         })
     }
     
-    const keyboardEventHandler = ({key}: KeyboardEvent) => {
-        switch(key) {
+    const keyboardEventHandler = (event: KeyboardEvent) => {
+        if (event.metaKey || event.ctrlKey) {
+            return
+        }
+        
+        switch(event.key) {
             case "Enter": enterKeyHandler(); return
             case "Backspace": backspaceKeyHandler(); return
-            default: keyHandler(key)
+            default: keyHandler(event.key)
         }
     }
 
