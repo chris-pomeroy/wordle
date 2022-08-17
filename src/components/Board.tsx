@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Row from './Row';
 import styles from './Board.module.css';
 import useAnswers from '../services/Answers';
+import Keyboard from './Keyboard';
 
 const Board = () => {
 
@@ -67,11 +68,14 @@ const Board = () => {
     }
 
     return (
-        <div className={styles.board}>
-            {
-                guesses.map((guess, index) => <Row key={index} guess={guess} colours={colours[index]} />)
-            }
-        </div>
+        <>
+            <div className={styles.board}>
+                {
+                    guesses.map((guess, index) => <Row key={index} guess={guess} colours={colours[index]} />)
+                }
+            </div>
+            <Keyboard />
+        </>
     )
 }
 

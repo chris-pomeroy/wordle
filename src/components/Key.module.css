@@ -1,0 +1,11 @@
+.key {
+    background-color: grey;
+    box-sizing: content-box;
+    padding: 1rem;
+    border-radius: 1rem;
+    margin: .2rem;
+    user-select: none;
+    width: 1rem;
+    font-size: large;
+    font-weight: bold;
+}
