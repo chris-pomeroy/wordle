@@ -7,20 +7,21 @@ const useAnswers = () => {
     const [answerList] = useState(new Set(answers))
 
     const getColoursForGuess = (guess: string) => {
-        const guessLetters = guess.split('')
         const answerLetters = answer.split('')
-        const result = Array(5).fill('')
-        guessLetters.forEach((letter, index) => {
+        const result = guess.split('')
+        result.forEach((letter, index) => {
             if (letter === answerLetters[index]) {
                 answerLetters[index] = ''
                 result[index] = 'green'
             }
         })
-        guessLetters.forEach((letter, index) => {
+        result.forEach((letter, index) => {
             const answerIndex = answerLetters.indexOf(letter)
             if (answerIndex !== -1) {
                 answerLetters[answerIndex] = ''
                 result[index] = 'yellow'
+            } else if (result[index] !== 'green') {
+                result[index] = ''
             }
         })
         return result
