@@ -17,4 +17,4 @@ const Row = ({guess, colours}: Props) => {
     )
 }
 
-export default Row;
+export default Row
