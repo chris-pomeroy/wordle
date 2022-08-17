@@ -3,14 +3,15 @@ import styles from './Row.module.css'
 
 type Props = {
     guess: string
+    colours: string[]
 }
 
-const Row = ({guess}: Props) => {
+const Row = ({guess, colours}: Props) => {
     const row = guess.split('').concat(Array(5 - guess.length).fill(""))
     return (
         <div className={styles.row}>
             {
-                row.map((letter, index) => <Cell key={index} letter={letter}/>)
+                row.map((letter, index) => <Cell key={index} letter={letter} colour={colours[index]} />)
             }
         </div>
     )

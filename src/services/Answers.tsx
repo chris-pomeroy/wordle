@@ -6,10 +6,29 @@ const useAnswers = () => {
     const [answer] = useState(answers[Math.floor(Math.random() * answers.length)])
     const [answerList] = useState(new Set(answers))
 
-    const isGuessCorrect = (guess: string) => answer === guess
+    const getColoursForGuess = (guess: string) => {
+        const guessLetters = guess.split('')
+        const answerLetters = answer.split('')
+        const result = Array(5).fill('')
+        guessLetters.forEach((letter, index) => {
+            if (letter === answerLetters[index]) {
+                answerLetters[index] = ''
+                result[index] = 'green'
+            }
+        })
+        guessLetters.forEach((letter, index) => {
+            const answerIndex = answerLetters.indexOf(letter)
+            if (answerIndex !== -1) {
+                answerLetters[answerIndex] = ''
+                result[index] = 'yellow'
+            }
+        })
+        return result
+    }
+
     const isGuessValid = (guess: string) => answerList.has(guess)
 
-    return {isGuessCorrect, isGuessValid}
+    return {getColoursForGuess, isGuessValid}
 }
 
 export default useAnswers

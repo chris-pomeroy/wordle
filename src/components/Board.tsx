@@ -6,9 +6,10 @@ import useAnswers from '../services/Answers';
 const Board = () => {
 
     const [guesses, setGuesses] = useState<string[]>(Array(6).fill(""))
+    const [colours, setColours] = useState<string[][]>(Array(6).fill(Array(5).fill("")))
 
     const [currentRow, setCurrentRow] = useState(0)
-    const {isGuessCorrect, isGuessValid} = useAnswers()
+    const {getColoursForGuess, isGuessValid} = useAnswers()
 
     useEffect(() => {
         document.addEventListener("keydown", keyboardEventHandler)
@@ -20,6 +21,11 @@ const Board = () => {
             return
         }
 
+        setColours(prev => {
+            const result = prev.map(row => row.slice())
+            result[currentRow] = getColoursForGuess(guesses[currentRow])
+            return result
+        })
         setCurrentRow(prev => prev + 1)
     }
 
@@ -63,7 +69,7 @@ const Board = () => {
     return (
         <div className={styles.board}>
             {
-                guesses.map((guess, index) => <Row key={index} guess={guess} />)
+                guesses.map((guess, index) => <Row key={index} guess={guess} colours={colours[index]} />)
             }
         </div>
     )
