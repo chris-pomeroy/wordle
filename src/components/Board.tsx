@@ -42,7 +42,7 @@ const Board = () => {
         })
     }
 
-    const keyHandler = (key: string) => {
+    const letterKeyHandler = (key: string) => {
         key = key.toUpperCase()
         if (!key.match(`^[A-Z]$`) || guesses[currentRow].length > 4) {
             return
@@ -55,16 +55,21 @@ const Board = () => {
         })
     }
     
+    const keyHandler = (key: string) => {
+        switch(key) {
+            case "↵":
+            case "Enter": enterKeyHandler(); return
+            case "⌫":
+            case "Backspace": backspaceKeyHandler(); return
+            default: letterKeyHandler(key)
+        }
+    }
+
     const keyboardEventHandler = (event: KeyboardEvent) => {
         if (event.metaKey || event.ctrlKey) {
             return
         }
-        
-        switch(event.key) {
-            case "Enter": enterKeyHandler(); return
-            case "Backspace": backspaceKeyHandler(); return
-            default: keyHandler(event.key)
-        }
+        keyHandler(event.key)
     }
 
     return (
@@ -74,7 +79,7 @@ const Board = () => {
                     guesses.map((guess, index) => <Row key={index} guess={guess} colours={colours[index]} />)
                 }
             </div>
-            <Keyboard />
+            <Keyboard keyHandler={keyHandler}/>
         </>
     )
 }
