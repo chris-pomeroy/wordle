@@ -3,9 +3,10 @@
     flex-direction: column;
     margin-bottom: .5rem;
     width: 500px;
-    max-width: 90%;
+    max-width: 100%;
 }
 
 .keyrow {
     display: flex;
+    justify-content: center;
 }
