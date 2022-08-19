@@ -17,9 +17,9 @@ const Keyboard = ({keyHandler, isActive}: Props) => {
     return (
         <div className={styles.keyboard}>
             {keys.map((row, index) => (
-                <div key={index} className={styles.keyrow}>{
-                    row.map(letter => <Key key={letter} letter={letter} onClick={() => keyHandler(letter)} isActive={isActive(letter)}/>)
-                }</div>
+                <div key={index} className={styles.keyrow}>
+                    {row.map(letter => <Key key={letter} letter={letter} onClick={() => keyHandler(letter)} isActive={isActive(letter)} />)}
+                </div>
             ))}
         </div>
     )
