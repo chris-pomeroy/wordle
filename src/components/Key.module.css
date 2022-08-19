@@ -8,3 +8,8 @@
     font-size: medium;
     font-weight: bold;
 }
+
+.key:active,
+.active {
+    filter: brightness(0.6);
+}

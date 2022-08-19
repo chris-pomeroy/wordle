@@ -12,10 +12,19 @@ const Board = () => {
     const [currentRow, setCurrentRow] = useState(0)
     const {getColoursForGuess, isGuessValid} = useAnswers()
 
+    const [activeKey, setActiveKey] = useState('')
+
     useEffect(() => {
         document.addEventListener("keydown", keyboardEventHandler)
         return () => document.removeEventListener("keydown", keyboardEventHandler)
     }, [currentRow, guesses])
+
+    useEffect(() => {
+        document.addEventListener("keyup", keyUpEventHandler)
+        return () => document.removeEventListener("keyup", keyUpEventHandler)
+    }, [activeKey])
+
+    const keyUpEventHandler = () => setActiveKey('')
 
     const enterKeyHandler = () => {
         if (currentRow > 5 || guesses[currentRow].length < 5 || !isGuessValid(guesses[currentRow])) {
@@ -57,10 +66,8 @@ const Board = () => {
     
     const keyHandler = (key: string) => {
         switch(key) {
-            case "↵":
-            case "Enter": enterKeyHandler(); return
-            case "⌫":
-            case "Backspace": backspaceKeyHandler(); return
+            case "↵": enterKeyHandler(); return
+            case "⌫": backspaceKeyHandler(); return
             default: letterKeyHandler(key)
         }
     }
@@ -69,8 +76,18 @@ const Board = () => {
         if (event.metaKey || event.ctrlKey) {
             return
         }
-        keyHandler(event.key)
+
+        let {key} = event
+        switch (key) {
+            case "Enter": key = "↵"; break
+            case "Backspace": key = "⌫"
+        }
+
+        setActiveKey(key.toUpperCase())
+        keyHandler(key)
     }
+
+    const isActiveKey = (key: string) => key === activeKey
 
     return (
         <>
@@ -79,7 +96,7 @@ const Board = () => {
                     guesses.map((guess, index) => <Row key={index} guess={guess} colours={colours[index]} />)
                 }
             </div>
-            <Keyboard keyHandler={keyHandler}/>
+            <Keyboard keyHandler={keyHandler} isActive={isActiveKey}/>
         </>
     )
 }
