@@ -1,5 +1,5 @@
 .key {
-    background-color: grey;
+    background-color: rgb(128, 128, 128);
     padding: 1.3rem 0;
     border-radius: .5rem;
     margin: .1rem;
@@ -12,4 +12,16 @@
 .key:active,
 .active {
     filter: brightness(0.6);
+}
+
+.green {
+    background-color: #538d4e;
+}
+
+.yellow {
+    background-color: #b59f3b;
+}
+
+.transparent {
+    background-color: rgba(128, 128, 128, .4);
 }
