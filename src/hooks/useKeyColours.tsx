@@ -1,18 +1,12 @@
 import { useState } from "react"
 
-const useKeys = () => {
-
-    const keys = [
-        ["Q","W","E","R","T","Y","U","I","O","P"],
-        ["A","S","D","F","G","H","J","K","L"],
-        ["↵","Z","X","C","V","B","N","M","⌫"]
-    ]
+const useKeyColours = () => {
 
     const [correctKeys, setCorrectKeys] = useState<Set<string>>(new Set())
     const [partialKeys, setPartialKeys] = useState<Set<string>>(new Set())
     const [incorrectKeys, setIncorrectKeys] = useState<Set<string>>(new Set())
 
-    const setKey = (key: string, colour: string) => {
+    const setKeyColour = (key: string, colour: string) => {
         switch (colour) {
             case "green": setCorrectKeys(prev => new Set(prev.add(key))); return
             case "yellow": setPartialKeys(prev => new Set(prev.add(key))); return
@@ -36,8 +30,8 @@ const useKeys = () => {
         return "grey"
     }
 
-    return {keys, setKey, getKeyColour}
+    return {setKeyColour, getKeyColour}
     
 }
 
-export default useKeys
+export default useKeyColours

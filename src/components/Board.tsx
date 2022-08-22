@@ -3,7 +3,7 @@ import Row from './Row';
 import styles from './Board.module.css';
 import useAnswers from '../hooks/useAnswers';
 import Keyboard from './Keyboard';
-import useKeys from '../hooks/useKeys';
+import useKeyColours from '../hooks/useKeyColours';
 
 const Board = () => {
 
@@ -12,7 +12,7 @@ const Board = () => {
 
     const [currentRow, setCurrentRow] = useState(0)
     const {getColoursForGuess, isGuessValid} = useAnswers()
-    const {keys, setKey, getKeyColour} = useKeys()
+    const {setKeyColour, getKeyColour} = useKeyColours()
 
     const [activeKey, setActiveKey] = useState('')
 
@@ -41,7 +41,7 @@ const Board = () => {
             return result
         })
 
-        guesses[currentRow].split("").forEach((letter, index) => setKey(letter, coloursForGuess[index]))
+        guesses[currentRow].split("").forEach((letter, index) => setKeyColour(letter, coloursForGuess[index]))
         setCurrentRow(prev => prev + 1)
     }
 
@@ -103,7 +103,7 @@ const Board = () => {
                     guesses.map((guess, index) => <Row key={index} guess={guess} colours={colours[index]} />)
                 }
             </div>
-            <Keyboard keys={keys} keyHandler={keyHandler} isActive={isActiveKey} getKeyColour={getKeyColour} />
+            <Keyboard keyHandler={keyHandler} isActive={isActiveKey} getKeyColour={getKeyColour} />
         </>
     )
 }
