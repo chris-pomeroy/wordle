@@ -1,5 +1,4 @@
 .key {
-    background-color: rgb(128, 128, 128);
     padding: 1.3rem 0;
     border-radius: .5rem;
     margin: .1rem;
@@ -20,6 +19,10 @@
 
 .yellow {
     background-color: #b59f3b;
+}
+
+.grey {
+    background-color: rgb(128, 128, 128);
 }
 
 .transparent {

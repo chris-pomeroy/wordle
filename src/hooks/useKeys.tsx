@@ -33,7 +33,7 @@ const useKeys = () => {
             return "transparent"
         }
 
-        return ""
+        return "grey"
     }
 
     return {keys, setKey, getKeyColour}
