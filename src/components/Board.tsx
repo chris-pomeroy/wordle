@@ -83,7 +83,8 @@ const Board = () => {
             case "Backspace": key = "⌫"
         }
 
-        setActiveKey(key.toUpperCase())
+        key = key.toUpperCase()
+        setActiveKey(key)
         keyHandler(key)
     }
 
