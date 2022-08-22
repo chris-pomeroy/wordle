@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Row from './Row';
 import styles from './Board.module.css';
-import useAnswers from '../services/Answers';
+import useAnswers from '../hooks/useAnswers';
 import Keyboard from './Keyboard';
 
 const Board = () => {
@@ -53,7 +53,7 @@ const Board = () => {
 
     const letterKeyHandler = (key: string) => {
         key = key.toUpperCase()
-        if (!key.match(`^[A-Z]$`) || guesses[currentRow].length > 4) {
+        if (!key.match(`^[A-Z]$`) || guesses[currentRow].length > 4 || (currentRow > 1 && colours[currentRow - 1].every(colour => colour === 'green'))) {
             return
         }
 

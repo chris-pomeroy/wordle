@@ -1,6 +1,6 @@
 .cell {
-    width: 3rem;
-    height: 3rem;
+    width: 20%;
+    aspect-ratio: 1 / 1;
     margin: .1rem;
     background-color: #282c34;
     border: 1px solid black;

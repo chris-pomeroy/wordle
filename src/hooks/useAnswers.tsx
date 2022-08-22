@@ -18,7 +18,7 @@ const useAnswers = () => {
         })
         guessLetters.forEach((letter, index) => {
             const answerIndex = answerLetters.indexOf(letter)
-            if (answerIndex !== -1) {
+            if (result[index] !== 'green' && answerIndex !== -1) {
                 answerLetters[answerIndex] = ''
                 result[index] = 'yellow'
             }
