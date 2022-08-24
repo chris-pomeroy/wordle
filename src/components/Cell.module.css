@@ -3,7 +3,7 @@
     aspect-ratio: 1 / 1;
     margin: .1rem;
     background-color: #282c34;
-    border: 1px solid black;
+    border: 1px solid darkslategray;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -16,4 +16,31 @@
 
 .yellow {
     background-color: #b59f3b;
+}
+
+.spin {
+    animation-name: spin;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+}
+
+.spin:nth-child(2) {
+    animation-delay: .25s;
+}
+
+.spin:nth-child(3) {
+    animation-delay: .5s;
+}
+
+.spin:nth-child(4) {
+    animation-delay: .75s;
+}
+
+.spin:nth-child(5) {
+    animation-delay: 1s;
+}
+
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
 }
