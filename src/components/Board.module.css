@@ -1,8 +1,7 @@
 .board {
-    background-color: grey;
+    /* background-color: grey; */
     box-sizing: border-box;
-    padding: 2rem;
-    border-radius: 2rem;
+    padding: .1rem;
     width: 350px;
     max-width: 100%;
     display: flex;
