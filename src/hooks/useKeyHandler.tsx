@@ -1,17 +1,25 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import useAnswers from "./useAnswers"
 import useKeyColours from "./useKeyColours"
 
 const useKeyHandler = () => {
+
+    useEffect(() => {
+        document.addEventListener("keydown", keyDownEventHandler)
+        return () => document.removeEventListener("keydown", keyDownEventHandler)
+    })
+
+    useEffect(() => {
+        document.addEventListener("keyup", keyUpEventHandler)
+        return () => document.removeEventListener("keyup", keyUpEventHandler)
+    })
 
     const [guesses, setGuesses] = useState<string[]>(Array(6).fill(""))
     const [colours, setColours] = useState<string[][]>(Array(6).fill(Array(5).fill("")))
 
     const [currentRow, setCurrentRow] = useState(0)
     const {getColoursForGuess, isGuessValid} = useAnswers()
-    const {setKeyColour, getKeyColour} = useKeyColours()
-
-    const [activeKey, setActiveKey] = useState('')
+    const {setKeyColour, getKeyClasses, setActiveKey} = useKeyColours()
 
     const enterKeyHandler = () => {
         if (currentRow > 5 || guesses[currentRow].length < 5 || !isGuessValid(guesses[currentRow])) {
@@ -79,11 +87,9 @@ const useKeyHandler = () => {
         keyHandler(key)
     }
 
-    const isActiveKey = (key: string) => key === activeKey
-
     const keyUpEventHandler = () => setActiveKey('')
 
-    return {guesses, colours, keyHandler, keyDownEventHandler, keyUpEventHandler, isActiveKey, getKeyColour}
+    return {guesses, colours, keyHandler, getKeyClasses}
 }
 
 export default useKeyHandler

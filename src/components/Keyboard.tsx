@@ -3,11 +3,10 @@ import styles from './Keyboard.module.css'
 
 type Props = {
     keyHandler: (key: string) => void
-    isActive: (key: string) => boolean
-    getKeyColour: (key: string) => string
+    getKeyClasses: (key: string) => string[]
 }
 
-const Keyboard = ({keyHandler, isActive, getKeyColour}: Props) => {
+const Keyboard = ({keyHandler, getKeyClasses}: Props) => {
     
     const keys = [
         ["Q","W","E","R","T","Y","U","I","O","P"],
@@ -19,7 +18,7 @@ const Keyboard = ({keyHandler, isActive, getKeyColour}: Props) => {
         <div className={styles.keyboard}>
             {keys.map((row, index) => (
                 <div key={index} className={styles.keyrow}>
-                    {row.map(letter => <Key key={letter} letter={letter} onClick={() => keyHandler(letter)} isActive={isActive(letter)} colour={getKeyColour(letter)} />)}
+                    {row.map(letter => <Key key={letter} letter={letter} onClick={() => keyHandler(letter)} classes={getKeyClasses(letter)} />)}
                 </div>
             ))}
         </div>

@@ -11,9 +11,7 @@ const Row = ({guess, colours}: Props) => {
     const spin = colours.every(colour => colour === "green")
     return (
         <div className={styles.row}>
-            {
-                row.map((letter, index) => <Cell key={index} letter={letter} colour={colours[index]} spin={spin} />)
-            }
+            {row.map((letter, index) => <Cell key={index} letter={letter} colour={colours[index]} spin={spin} />)}
         </div>
     )
 }

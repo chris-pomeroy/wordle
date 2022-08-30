@@ -6,6 +6,8 @@ const useKeyColours = () => {
     const [partialKeys, setPartialKeys] = useState<Set<string>>(new Set())
     const [incorrectKeys, setIncorrectKeys] = useState<Set<string>>(new Set())
 
+    const [activeKey, setActiveKey] = useState('')
+
     const setKeyColour = (key: string, colour: string) => {
         switch (colour) {
             case "green": setCorrectKeys(prev => new Set(prev.add(key))); return
@@ -30,8 +32,13 @@ const useKeyColours = () => {
         return "grey"
     }
 
-    return {setKeyColour, getKeyColour}
-    
+    const getKeyClasses = (key: string) => {
+        const result = key === activeKey ? ["active"] : []
+        result.push(getKeyColour(key))
+        return result
+    }
+
+    return {setKeyColour, getKeyClasses, setActiveKey}
 }
 
 export default useKeyColours
