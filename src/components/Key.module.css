@@ -14,17 +14,17 @@
 }
 
 .green {
-    background-color: #538d4e;
+    background-color: var(--correct-color);
 }
 
 .yellow {
-    background-color: #b59f3b;
+    background-color: var(--partial-color);
 }
 
 .grey {
-    background-color: rgb(128, 128, 128);
+    background-color: var(--default-color);
 }
 
 .transparent {
-    background-color: rgba(128, 128, 128, .4);
+    background-color: var(--transparent-color);
 }

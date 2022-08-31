@@ -7,6 +7,11 @@
   align-items: center;
   font-size: calc(10px + 2vmin);
   color: white;
+
+  --default-color: rgb(128, 128, 128);
+  --correct-color: #538d4e;
+  --partial-color: #b59f3b;
+  --transparent-color: rgba(128, 128, 128, .4);
 }
 
 @supports (-webkit-touch-callout: none) {

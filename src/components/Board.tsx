@@ -9,6 +9,9 @@ const Board = () => {
 
     return (
         <>
+            <header className={styles.header}>
+                <span className={styles.headerLogo}>Wordle</span>
+            </header>
             <div className={styles.board}>
                 {
                     guesses.map((guess, index) => <Row key={index} guess={guess} colours={colours[index]} />)
