@@ -22,6 +22,12 @@ const useKeyHandler = () => {
     const {getColoursForGuess, isGuessValid} = useAnswers()
     const {setKeyColour, getKeyClasses, setActiveKey} = useKeyColours()
 
+    useEffect(() => {
+        if (jiggle) {
+            setTimeout(() => setJiggle(false), 500)
+        }
+    }, [jiggle])
+
     const enterKeyHandler = () => {
         if (currentRow > 5 || guesses[currentRow].length < 5 || !isGuessValid(guesses[currentRow])) {
             setJiggle(true)
@@ -92,9 +98,8 @@ const useKeyHandler = () => {
     const keyUpEventHandler = () => setActiveKey('')
 
     const shouldJiggle = (row: number) => jiggle && row === currentRow
-    const onJiggleAnimationEnd = () => setJiggle(false)
 
-    return {guesses, colours, shouldJiggle, onJiggleAnimationEnd, keyHandler, getKeyClasses}
+    return {guesses, colours, shouldJiggle, keyHandler, getKeyClasses}
 }
 
 export default useKeyHandler

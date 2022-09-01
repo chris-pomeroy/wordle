@@ -5,14 +5,13 @@ type Props = {
     guess: string
     colours: string[]
     jiggle: boolean
-    onJiggleAnimationEnd: () => void
 }
 
-const Row = ({guess, colours, jiggle, onJiggleAnimationEnd}: Props) => {
+const Row = ({guess, colours, jiggle}: Props) => {
     const row = guess.split('').concat(Array(5 - guess.length).fill(""))
     const spin = colours.every(colour => colour === "green")
     return (
-        <div className={`${styles.row} ${jiggle ? styles.jiggle : ""}`} onAnimationEnd={onJiggleAnimationEnd}>
+        <div className={`${styles.row} ${jiggle ? styles.jiggle : ""}`}>
             {row.map((letter, index) => <Cell key={index} letter={letter} colour={colours[index]} spin={spin} />)}
         </div>
     )
