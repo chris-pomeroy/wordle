@@ -1,4 +1,19 @@
 .row {
     display: flex;
     width: 100%;
+    position: relative;
+}
+
+.jiggle {
+    animation-name: jiggleAnimation;
+    animation-duration: .5s;
+}
+
+@keyframes jiggleAnimation {
+    0% {left: 0}
+    20% {left: -1rem;}
+    40% {left: 1rem;}
+    60% {left: -1rem;}
+    80% {left: 1rem;}
+    100% {left: 0;}
 }
