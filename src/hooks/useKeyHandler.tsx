@@ -17,10 +17,11 @@ const useKeyHandler = () => {
     const [guesses, setGuesses] = useState<string[]>(Array(6).fill(""))
     const [colours, setColours] = useState<string[][]>(Array(6).fill(Array(5).fill("")))
     const [jiggle, setJiggle] = useState(false)
+    const [showModal, setShowModal] = useState(false)
 
     const [currentRow, setCurrentRow] = useState(0)
-    const {getColoursForGuess, isGuessValid} = useAnswers()
-    const {setKeyColour, getKeyClasses, setActiveKey} = useKeyColours()
+    const {getColoursForGuess, isGuessValid, nextAnswer} = useAnswers()
+    const {setKeyColour, getKeyClasses, setActiveKey, resetKeyColours} = useKeyColours()
 
     useEffect(() => {
         if (jiggle) {
@@ -43,6 +44,11 @@ const useKeyHandler = () => {
         })
 
         guesses[currentRow].split("").forEach((letter, index) => setKeyColour(letter, coloursForGuess[index]))
+
+        if (coloursForGuess.every(colour => colour === "green")) {
+            setTimeout(() => setShowModal(true), 1500)
+        }
+
         setCurrentRow(prev => prev + 1)
     }
 
@@ -99,7 +105,16 @@ const useKeyHandler = () => {
 
     const shouldJiggle = (row: number) => jiggle && row === currentRow
 
-    return {guesses, colours, shouldJiggle, keyHandler, getKeyClasses}
+    const startNewGame = () => {
+        setGuesses(Array(6).fill(""))
+        setColours(Array(6).fill(Array(5).fill("")))
+        setCurrentRow(0)
+        nextAnswer()
+        resetKeyColours()
+        setShowModal(false)
+    }
+
+    return {guesses, colours, showModal, shouldJiggle, keyHandler, getKeyClasses, startNewGame}
 }
 
 export default useKeyHandler

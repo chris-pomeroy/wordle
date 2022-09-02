@@ -1,0 +1,33 @@
+.backdrop {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--backdrop-colour);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal {
+    border: 2px solid var(--default-colour);
+    border-radius: 2rem;
+    width: 30rem;
+    height: 30rem;
+    max-width: 90%;
+    max-height: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+    background-color: rgb(40, 44, 52);
+}
+
+.modalButton {
+    border: 2px solid var(--default-colour);
+    border-radius: 1rem;
+    padding: 1rem;
+    user-select: none;
+    cursor: pointer;
+}

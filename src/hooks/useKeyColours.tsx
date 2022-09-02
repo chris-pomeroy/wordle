@@ -38,7 +38,13 @@ const useKeyColours = () => {
         return result
     }
 
-    return {setKeyColour, getKeyClasses, setActiveKey}
+    const resetKeyColours = () => {
+        setCorrectKeys(new Set())
+        setPartialKeys(new Set())
+        setIncorrectKeys(new Set())
+    }
+
+    return {setKeyColour, getKeyClasses, setActiveKey, resetKeyColours}
 }
 
 export default useKeyColours

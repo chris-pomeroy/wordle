@@ -3,13 +3,13 @@ import answers from '../resources/answers.json'
 
 const useAnswers = () => {
 
-    const [answer] = useState("TOAST") //useState(answers[Math.floor(Math.random() * answers.length)])
+    const [answer, setAnswer] = useState("TOAST") //useState(answers[Math.floor(Math.random() * answers.length)])
     const [answerList] = useState(new Set(answers))
 
     const getColoursForGuess = (guess: string) => {
         const guessLetters = guess.split('')
         const answerLetters = answer.split('')
-        const result = Array(5).fill('')
+        const result : string[] = Array(5).fill("")
         guessLetters.forEach((letter, index) => {
             if (letter === answerLetters[index]) {
                 answerLetters[index] = ''
@@ -28,7 +28,9 @@ const useAnswers = () => {
 
     const isGuessValid = (guess: string) => answerList.has(guess)
 
-    return {getColoursForGuess, isGuessValid}
+    const nextAnswer = () => setAnswer("TOAST") //setAnswer(answers[Math.floor(Math.random() * answers.length)])
+
+    return {getColoursForGuess, isGuessValid, nextAnswer}
 }
 
 export default useAnswers

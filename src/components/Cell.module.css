@@ -3,7 +3,7 @@
     aspect-ratio: 1 / 1;
     margin: .1rem;
     background-color: #282c34;
-    border: 1px solid var(--default-color);
+    border: 1px solid var(--default-colour);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -11,11 +11,11 @@
 }
 
 .green {
-    background-color: var(--correct-color);
+    background-color: var(--correct-colour);
 }
 
 .yellow {
-    background-color: var(--partial-color);
+    background-color: var(--partial-colour);
 }
 
 .spin {
