@@ -3,7 +3,7 @@ import answers from '../resources/answers.json'
 
 const useAnswers = () => {
 
-    const [answer, setAnswer] = useState("TOAST") //useState(answers[Math.floor(Math.random() * answers.length)])
+    const [answer, setAnswer] = useState(localStorage.getItem("answer") || answers[Math.floor(Math.random() * answers.length)])
     const [answerList] = useState(new Set(answers))
 
     const getColoursForGuess = (guess: string) => {
@@ -28,7 +28,13 @@ const useAnswers = () => {
 
     const isGuessValid = (guess: string) => answerList.has(guess)
 
-    const nextAnswer = () => setAnswer("TOAST") //setAnswer(answers[Math.floor(Math.random() * answers.length)])
+    const nextAnswer = () => {
+        // setAnswer("TOAST")
+
+        const nextAnswer = answers[Math.floor(Math.random() * answers.length)]
+        setAnswer(nextAnswer)
+        localStorage.setItem("answer", nextAnswer)
+    }
 
     return {getColoursForGuess, isGuessValid, nextAnswer}
 }

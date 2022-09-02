@@ -14,8 +14,13 @@ const useKeyHandler = () => {
         return () => document.removeEventListener("keyup", keyUpEventHandler)
     })
 
-    const [guesses, setGuesses] = useState<string[]>(Array(6).fill(""))
-    const [colours, setColours] = useState<string[][]>(Array(6).fill(Array(5).fill("")))
+    const getLocalStorageOrDefault = (key: string, defaultResult: any) => {
+        var result = localStorage.getItem(key)
+        return result ? JSON.parse(result) : defaultResult
+    }
+
+    const [guesses, setGuesses] = useState<string[]>(getLocalStorageOrDefault("guesses", Array(6).fill("")))
+    const [colours, setColours] = useState<string[][]>(getLocalStorageOrDefault("colours", Array(6).fill(Array(5).fill(""))))
     const [jiggle, setJiggle] = useState(false)
     const [showModal, setShowModal] = useState(false)
 
@@ -29,6 +34,22 @@ const useKeyHandler = () => {
         }
     }, [jiggle])
 
+    useEffect(() => {
+        if (guesses[0] === "") {
+            return
+        }
+        setCurrentRow(guesses.findIndex(guess => guess === ""))
+        guesses.forEach((guess, guessIndex) => {
+            if (guess === "") {
+                return
+            }
+            guess.split("").forEach((letter, letterIndex) => setKeyColour(letter, colours[guessIndex][letterIndex]))
+        })
+        if (colours.some(colourRow => colourRow.every(colour => colour === "green"))) {
+            setShowModal(true)
+        }
+    }, [])
+
     const enterKeyHandler = () => {
         if (currentRow > 5 || guesses[currentRow].length < 5 || !isGuessValid(guesses[currentRow])) {
             setJiggle(true)
@@ -40,6 +61,7 @@ const useKeyHandler = () => {
         setColours(prev => {
             const result = prev.map(row => row.slice())
             result[currentRow] = coloursForGuess
+            localStorage.setItem("colours", JSON.stringify(result))
             return result
         })
 
@@ -50,6 +72,7 @@ const useKeyHandler = () => {
         }
 
         setCurrentRow(prev => prev + 1)
+        localStorage.setItem("guesses", JSON.stringify(guesses))
     }
 
     const backspaceKeyHandler = () => {
