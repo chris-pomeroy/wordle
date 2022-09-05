@@ -22,7 +22,6 @@ const useKeyHandler = () => {
     const [guesses, setGuesses] = useState<string[]>(getLocalStorageOrDefault("guesses", Array(6).fill("")))
     const [colours, setColours] = useState<string[][]>(getLocalStorageOrDefault("colours", Array(6).fill(Array(5).fill(""))))
     const [jiggle, setJiggle] = useState(false)
-    const [showModal, setShowModal] = useState(false)
 
     const [currentRow, setCurrentRow] = useState(0)
     const {getColoursForGuess, isGuessValid, nextAnswer} = useAnswers()
@@ -38,16 +37,14 @@ const useKeyHandler = () => {
         if (guesses[0] === "") {
             return
         }
-        setCurrentRow(guesses.findIndex(guess => guess === ""))
+        const row = guesses.findIndex(guess => guess === "")
+        setCurrentRow(row === -1 ? 6 : row)
         guesses.forEach((guess, guessIndex) => {
             if (guess === "") {
                 return
             }
             guess.split("").forEach((letter, letterIndex) => setKeyColour(letter, colours[guessIndex][letterIndex]))
         })
-        if (colours.some(colourRow => colourRow.every(colour => colour === "green"))) {
-            setShowModal(true)
-        }
     }, [])
 
     const enterKeyHandler = () => {
@@ -66,10 +63,6 @@ const useKeyHandler = () => {
         })
 
         guesses[currentRow].split("").forEach((letter, index) => setKeyColour(letter, coloursForGuess[index]))
-
-        if (coloursForGuess.every(colour => colour === "green")) {
-            setTimeout(() => setShowModal(true), 1500)
-        }
 
         setCurrentRow(prev => prev + 1)
         localStorage.setItem("guesses", JSON.stringify(guesses))
@@ -134,10 +127,11 @@ const useKeyHandler = () => {
         setCurrentRow(0)
         nextAnswer()
         resetKeyColours()
-        setShowModal(false)
     }
 
-    return {guesses, colours, showModal, shouldJiggle, keyHandler, getKeyClasses, startNewGame}
+    const shouldShowModal = () => (currentRow > 0) && colours[currentRow - 1].every(colour => colour === "green") || currentRow > 5
+
+    return {guesses, colours, shouldShowModal, shouldJiggle, keyHandler, getKeyClasses, startNewGame}
 }
 
 export default useKeyHandler

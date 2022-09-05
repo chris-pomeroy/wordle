@@ -6,7 +6,7 @@ import Modal from './Modal';
 
 const Board = () => {
 
-    const {guesses, colours, showModal, shouldJiggle, keyHandler, getKeyClasses, startNewGame} = useKeyHandler()
+    const {guesses, colours, shouldShowModal, shouldJiggle, keyHandler, getKeyClasses, startNewGame} = useKeyHandler()
 
     return (
         <>
@@ -18,7 +18,7 @@ const Board = () => {
                     guesses.map((guess, index) => <Row key={index} guess={guess} colours={colours[index]} jiggle={shouldJiggle(index)} />)
                 }
             </div>
-            {showModal ? <Modal startNewGame={startNewGame} /> : null}
+            {<Modal startNewGame={startNewGame} active={shouldShowModal()} />}
             <Keyboard keyHandler={keyHandler} getKeyClasses={getKeyClasses} />
         </>
     )
