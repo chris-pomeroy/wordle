@@ -1,26 +1,19 @@
-import Row from './Row';
 import styles from './Board.module.css';
-import Keyboard from './Keyboard';
-import useKeyHandler from '../hooks/useKeyHandler';
-import Modal from './Modal';
+import Row from './Row';
 
-const Board = () => {
+type Props = {
+    guesses: string[]
+    colours: string[][]
+    shouldJiggle: (index: number) => boolean
+}
 
-    const {guesses, colours, shouldShowModal, shouldJiggle, keyHandler, getKeyClasses, startNewGame} = useKeyHandler()
-
+const Board = ({guesses, colours, shouldJiggle} : Props) => {
     return (
-        <>
-            <header className={styles.header}>
-                <span className={styles.headerLogo}>Wordle</span>
-            </header>
-            <div className={styles.board}>
-                {
-                    guesses.map((guess, index) => <Row key={index} guess={guess} colours={colours[index]} jiggle={shouldJiggle(index)} />)
-                }
-            </div>
-            {<Modal startNewGame={startNewGame} active={shouldShowModal()} />}
-            <Keyboard keyHandler={keyHandler} getKeyClasses={getKeyClasses} />
-        </>
+        <div className={styles.board}>
+            {
+                guesses.map((guess, index) => <Row key={index} guess={guess} colours={colours[index]} jiggle={shouldJiggle(index)} />)
+            }
+        </div>
     )
 }
 

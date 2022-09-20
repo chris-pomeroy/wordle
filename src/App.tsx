@@ -1,10 +1,10 @@
 import styles from './App.module.css';
-import Board from './components/Board';
+import Game from './components/Game';
 
 function App() {
   return (
     <div className={styles.App}>
-      <Board />
+      <Game />
     </div>
   );
 }
