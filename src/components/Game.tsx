@@ -10,15 +10,7 @@ const Game = () => {
 
     const [guesses, setGuesses] = useLocalStorage<string[]>("guesses", Array(6).fill(""))
     const [jiggle, setJiggle] = useState(false)
-    const [answer, setAnswer] = useState<string>(() => {
-        const storedAnswer = localStorage.getItem("answer")
-        if (storedAnswer) {
-            return storedAnswer
-        }
-        let newAnswer = answers[Math.floor(Math.random() * answers.length)]
-        localStorage.setItem("answer", newAnswer)
-        return newAnswer
-    })
+    const [answer, setAnswer] = useLocalStorage<string>("answer", answers[Math.floor(Math.random() * answers.length)])
 
     const getColoursForGuess = (guess: string) => {
         const guessLetters = guess.split('')
@@ -147,6 +139,8 @@ const Game = () => {
 
     const startNewGame = () => {
         setGuesses(Array(6).fill(""))
+        localStorage.setItem("guesses", JSON.stringify(Array(6).fill("")))
+
         setColours(Array(6).fill(Array(5).fill("")))
         setCurrentRow(0)
         setCorrectKeys(new Set())
