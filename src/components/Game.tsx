@@ -39,7 +39,10 @@ const Game = () => {
     const [incorrectKeys, setIncorrectKeys] = useState<Set<string>>(new Set())
     const [activeKey, setActiveKey] = useState('')
 
-    const [currentRow, setCurrentRow] = useState(0)
+    const [currentRow, setCurrentRow] = useState(() => {
+        const row = guesses.findIndex(guess => guess === "")
+        return row === -1 ? 6 : row
+    })
 
     useEffect(() => {
         const keyDownEventHandler = (event: KeyboardEvent) => {
@@ -74,11 +77,6 @@ const Game = () => {
     }, [jiggle])
 
     useEffect(() => {
-        if (guesses[0] === "") {
-            return
-        }
-        const row = guesses.findIndex(guess => guess === "")
-        setCurrentRow(row === -1 ? 6 : row)
         guesses.forEach((guess, guessIndex) => {
             guess.split("").forEach((letter, letterIndex) => setKeyColour(letter, colours[guessIndex][letterIndex]))
         })
