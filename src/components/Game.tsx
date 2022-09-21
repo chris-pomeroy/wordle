@@ -15,7 +15,7 @@ const Game = () => {
     const getColoursForGuess = (guess: string) => {
         const guessLetters = guess.split('')
         const answerLetters = answer.split('')
-        const result : string[] = Array(5).fill("")
+        const result : string[] = Array(5).fill("transparent")
         guessLetters.forEach((letter, index) => {
             if (letter === answerLetters[index]) {
                 answerLetters[index] = ''
@@ -33,10 +33,7 @@ const Game = () => {
     }
 
     const [colours, setColours] = useState<string[][]>(Array(6).fill(null).map((_,index) => getColoursForGuess(guesses[index])))
-
-    const [correctKeys, setCorrectKeys] = useState<Set<string>>(new Set())
-    const [partialKeys, setPartialKeys] = useState<Set<string>>(new Set())
-    const [incorrectKeys, setIncorrectKeys] = useState<Set<string>>(new Set())
+    const [keyboardColours, setKeyboardColours] = useState<Map<string, string>>(new Map())
     const [activeKey, setActiveKey] = useState('')
 
     const [currentRow, setCurrentRow] = useState(() => {
@@ -71,12 +68,6 @@ const Game = () => {
     })
 
     useEffect(() => {
-        if (jiggle) {
-            setTimeout(() => setJiggle(false), 500)
-        }
-    }, [jiggle])
-
-    useEffect(() => {
         guesses.forEach((guess, guessIndex) => {
             guess.split("").forEach((letter, letterIndex) => setKeyColour(letter, colours[guessIndex][letterIndex]))
         })
@@ -84,6 +75,9 @@ const Game = () => {
 
     const enterKeyHandler = () => {
         if (currentRow > 5 || guesses[currentRow].length < 5 || !answers.includes(guesses[currentRow])) {
+            if (!jiggle) {
+                setTimeout(() => setJiggle(false), 500)
+            }
             setJiggle(true)
             return
         }
@@ -141,9 +135,7 @@ const Game = () => {
 
         setColours(Array(6).fill(Array(5).fill("")))
         setCurrentRow(0)
-        setCorrectKeys(new Set())
-        setPartialKeys(new Set())
-        setIncorrectKeys(new Set())
+        setKeyboardColours(new Map())
 
         const nextAnswer = answers[Math.floor(Math.random() * answers.length)]
         setAnswer(nextAnswer)
@@ -153,32 +145,16 @@ const Game = () => {
     const shouldShowModal = ((currentRow > 0) && colours[currentRow - 1].every(colour => colour === "green")) || currentRow > 5
 
     const setKeyColour = (key: string, colour: string) => {
-        switch (colour) {
-            case "green": setCorrectKeys(prev => new Set(prev.add(key))); return
-            case "yellow": setPartialKeys(prev => new Set(prev.add(key))); return
-            case "": setIncorrectKeys(prev => new Set(prev.add(key)))
+        if (colour === "green"
+            || (colour === "yellow" && keyboardColours.get(key) !== "green")
+            || (colour === "transparent" && !keyboardColours.has(key))) {
+            setKeyboardColours(keyColours => new Map(keyColours.set(key, colour)))
         }
-    }
-
-    const getKeyColour = (key: string) => {
-        if (correctKeys.has(key)) {
-            return "green"
-        }
-
-        if (partialKeys.has(key)) {
-            return "yellow"
-        }
-
-        if (incorrectKeys.has(key)) {
-            return "transparent"
-        }
-
-        return "grey"
     }
 
     const getKeyClasses = (key: string) => {
         const result = key === activeKey ? ["active"] : []
-        result.push(getKeyColour(key))
+        result.push(keyboardColours.get(key) || "grey")
         return result
     }
 
