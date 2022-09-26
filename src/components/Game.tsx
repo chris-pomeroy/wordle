@@ -15,7 +15,7 @@ const Game = () => {
     const getColoursForGuess = (guess: string) => {
         const guessLetters = guess.split('')
         const answerLetters = answer.split('')
-        const result : string[] = Array(5).fill("transparent")
+        const result : string[] = Array(5).fill("")
         guessLetters.forEach((letter, index) => {
             if (letter === answerLetters[index]) {
                 answerLetters[index] = ''
@@ -145,6 +145,10 @@ const Game = () => {
     const shouldShowModal = ((currentRow > 0) && colours[currentRow - 1].every(colour => colour === "green")) || currentRow > 5
 
     const setKeyColour = (key: string, colour: string) => {
+        if (colour === "") {
+            colour = "transparent"
+        }
+
         if (colour === "green"
             || (colour === "yellow" && keyboardColours.get(key) !== "green")
             || (colour === "transparent" && !keyboardColours.has(key))) {
