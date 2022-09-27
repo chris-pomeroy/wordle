@@ -1,6 +1,7 @@
 import styles from './Game.module.css';
 import Keyboard from './Keyboard';
-import Modal from './Modal';
+import ModalBackdrop from './ModalBackdrop';
+import SuccessModal from './SuccessModal';
 import { useEffect, useState } from 'react';
 import Board from './Board';
 import useLocalStorage from '../hooks/useLocalStorage';
@@ -168,7 +169,9 @@ const Game = () => {
                 <span className={styles.headerLogo}>Wordle</span>
             </header>
             <Board guesses={guesses} colours={colours} shouldJiggle={shouldJiggle} />
-            {<Modal startNewGame={startNewGame} active={shouldShowModal} />}
+            <ModalBackdrop active={shouldShowModal}>
+                <SuccessModal startNewGame={startNewGame} />
+            </ModalBackdrop>    
             <Keyboard keyHandler={keyHandler} getKeyClasses={getKeyClasses} />
         </>
     )
