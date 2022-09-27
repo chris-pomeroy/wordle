@@ -1,14 +1,14 @@
-import styles from './SuccessModal.module.css'
+import styles from './Modal.module.css'
 
 type Props = {
     startNewGame: () => void
 }
 
-const SuccessModal = ({startNewGame} : Props) => (
+const GameWonModal = ({startNewGame} : Props) => (
     <div className={styles.modal}>
         <div className={styles.modalText}>Congratulations!</div>
         <div onClick={startNewGame} className={styles.modalButton}>New Game</div>
     </div>
 )
 
-export default SuccessModal
+export default GameWonModal

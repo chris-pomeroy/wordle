@@ -1,11 +1,12 @@
 import styles from './Game.module.css';
 import Keyboard from './Keyboard';
 import ModalBackdrop from './ModalBackdrop';
-import SuccessModal from './SuccessModal';
+import GameWonModal from './GameWonModal';
 import { useEffect, useState } from 'react';
 import Board from './Board';
 import useLocalStorage from '../hooks/useLocalStorage';
 import answers from '../resources/answers.json'
+import GameLostModal from './GameLostModal';
 
 const Game = () => {
 
@@ -41,6 +42,9 @@ const Game = () => {
         const row = guesses.findIndex(guess => guess === "")
         return row === -1 ? 6 : row
     })
+
+    const gameWon = (currentRow > 0) && colours[currentRow - 1].every(colour => colour === "green")
+    const gameOver = currentRow > 5 || gameWon
 
     useEffect(() => {
         const keyDownEventHandler = (event: KeyboardEvent) => {
@@ -109,7 +113,7 @@ const Game = () => {
 
     const letterKeyHandler = (key: string) => {
         key = key.toUpperCase()
-        if (!key.match(`^[A-Z]$`) || guesses[currentRow].length > 4 || (currentRow > 1 && colours[currentRow - 1].every(colour => colour === 'green'))) {
+        if (gameOver || !key.match(`^[A-Z]$`) || guesses[currentRow].length > 4) {
             return
         }
 
@@ -143,8 +147,6 @@ const Game = () => {
         localStorage.setItem("answer", nextAnswer)
     }
 
-    const shouldShowModal = ((currentRow > 0) && colours[currentRow - 1].every(colour => colour === "green")) || currentRow > 5
-
     const setKeyColour = (key: string, colour: string) => {
         if (colour === "") {
             colour = "transparent"
@@ -169,9 +171,9 @@ const Game = () => {
                 <span className={styles.headerLogo}>Wordle</span>
             </header>
             <Board guesses={guesses} colours={colours} shouldJiggle={shouldJiggle} />
-            <ModalBackdrop active={shouldShowModal}>
-                <SuccessModal startNewGame={startNewGame} />
-            </ModalBackdrop>    
+            <ModalBackdrop active={gameOver}>
+                { gameWon ? <GameWonModal startNewGame={startNewGame} /> : <GameLostModal startNewGame={startNewGame} answer={answer} /> }
+            </ModalBackdrop>
             <Keyboard keyHandler={keyHandler} getKeyClasses={getKeyClasses} />
         </>
     )
