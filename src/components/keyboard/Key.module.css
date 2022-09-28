@@ -8,6 +8,10 @@
     font-weight: bold;
 }
 
+.large {
+    width: 12%;
+}
+
 .key:active,
 .active {
     filter: brightness(0.6);
