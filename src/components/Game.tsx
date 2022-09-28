@@ -103,6 +103,12 @@ const Game = () => {
 
     const backspaceKeyHandler = () => {
         if (guesses[currentRow].length !== 0) {
+            setColours(prev => {
+                const result = [...prev]
+                result[currentRow][guesses[currentRow].length - 1] = ""
+                return result
+            })
+
             setGuesses(prev => {
                 const result = [...prev]
                 result[currentRow] = result[currentRow].slice(0, -1)
@@ -116,6 +122,12 @@ const Game = () => {
         if (gameOver || !key.match(`^[A-Z]$`) || guesses[currentRow].length > 4) {
             return
         }
+
+        setColours(prev => {
+            const result = [...prev]
+            result[currentRow][guesses[currentRow].length] = "grey"
+            return result
+        })
 
         setGuesses(prev => {
             const result = [...prev]
@@ -138,7 +150,7 @@ const Game = () => {
         setGuesses(Array(6).fill(""))
         localStorage.setItem("guesses", JSON.stringify(Array(6).fill("")))
 
-        setColours(Array(6).fill(Array(5).fill("")))
+        setColours(Array(6).fill(null).map(() => Array(5).fill("")))
         setCurrentRow(0)
         setKeyboardColours(new Map())
 

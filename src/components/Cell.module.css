@@ -8,6 +8,46 @@
     align-items: center;
     justify-content: center;
     font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+
+.cell div {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transition-property: top, bottom;
+    transition-duration: 1s;
+    transition-timing-function: ease;
+}
+
+.cell .shiftUp {
+    z-index: 1;
+    top: -100%;
+    bottom: 100%;
+}
+
+.cell:nth-child(2) .shiftUp {
+    transition-delay: .5s;
+}
+
+.cell:nth-child(3) .shiftUp {
+    transition-delay: 1s;
+}
+
+.cell:nth-child(4) .shiftUp {
+    transition-delay: 1.5s;
+}
+
+.cell:nth-child(5) .shiftUp{
+    transition-delay: 2s;
 }
 
 .green {
@@ -16,6 +56,10 @@
 
 .yellow {
     background-color: var(--partial-colour);
+}
+
+.grey {
+    background-color: var(--default-colour);
 }
 
 .spin {
