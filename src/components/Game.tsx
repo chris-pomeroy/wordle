@@ -1,12 +1,12 @@
 import styles from './Game.module.css';
-import Keyboard from './Keyboard';
-import ModalBackdrop from './ModalBackdrop';
-import GameWonModal from './GameWonModal';
+import Keyboard from './keyboard/Keyboard';
+import ModalBackdrop from './modal/ModalBackdrop';
+import GameWonModal from './modal/GameWonModal';
 import { useEffect, useState } from 'react';
-import Board from './Board';
+import Board from './board/Board';
 import useLocalStorage from '../hooks/useLocalStorage';
 import answers from '../resources/answers.json'
-import GameLostModal from './GameLostModal';
+import GameLostModal from './modal/GameLostModal';
 
 const Game = () => {
 
