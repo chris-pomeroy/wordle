@@ -95,7 +95,7 @@ const Game = () => {
             return result
         })
 
-        guesses[currentRow].split("").forEach((letter, index) => setKeyColour(letter, coloursForGuess[index]))
+        setTimeout(() => guesses[currentRow].split("").forEach((letter, index) => setKeyColour(letter, coloursForGuess[index])), 1500)
 
         setCurrentRow(prev => prev + 1)
         localStorage.setItem("guesses", JSON.stringify(guesses))
