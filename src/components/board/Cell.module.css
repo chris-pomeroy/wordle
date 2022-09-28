@@ -1,7 +1,7 @@
 .cell {
     width: 20%;
     aspect-ratio: 1 / 1;
-    margin: .1rem;
+    margin: .2rem;
     background-color: #282c34;
     border: 1px solid var(--default-colour);
     display: flex;
@@ -12,6 +12,7 @@
     flex-direction: column;
     overflow: hidden;
     position: relative;
+    font-size: 2rem;
 }
 
 .cell div {
@@ -24,8 +25,7 @@
     right: 0;
     bottom: 0;
     transition-property: top, bottom;
-    transition-duration: 1s;
-    transition-timing-function: ease;
+    transition-duration: .5s;
 }
 
 .cell .shiftUp {
@@ -35,19 +35,19 @@
 }
 
 .cell:nth-child(2) .shiftUp {
-    transition-delay: .5s;
+    transition-delay: .25s;
 }
 
 .cell:nth-child(3) .shiftUp {
-    transition-delay: 1s;
+    transition-delay: .5s;
 }
 
 .cell:nth-child(4) .shiftUp {
-    transition-delay: 1.5s;
+    transition-delay: .75s;
 }
 
 .cell:nth-child(5) .shiftUp{
-    transition-delay: 2s;
+    transition-delay: 1s;
 }
 
 .green {

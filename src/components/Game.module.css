@@ -5,6 +5,7 @@
     width: 100%;
     height: 4rem;
     border-bottom: 1px solid var(--default-colour);
+    margin-bottom: .5rem;
 }
 
 .headerLogo {
