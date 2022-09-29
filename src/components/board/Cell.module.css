@@ -2,7 +2,6 @@
     width: 20%;
     aspect-ratio: 1 / 1;
     margin: .2rem;
-    background-color: #282c34;
     border: 1px solid var(--default-colour);
     display: flex;
     align-items: center;
@@ -16,6 +15,7 @@
 }
 
 .cell div {
+    background-color: #282c34;
     position: absolute;
     display: flex;
     align-items: center;
@@ -25,7 +25,11 @@
     right: 0;
     bottom: 0;
     transition-property: top, bottom;
-    transition-duration: .5s;
+    transition-duration: .4s;
+}
+
+.cell div:first-child {
+    z-index: 1;
 }
 
 .cell .shiftUp {
@@ -35,31 +39,31 @@
 }
 
 .cell:nth-child(2) .shiftUp {
-    transition-delay: .25s;
+    transition-delay: .2s;
 }
 
 .cell:nth-child(3) .shiftUp {
-    transition-delay: .5s;
+    transition-delay: .4s;
 }
 
 .cell:nth-child(4) .shiftUp {
-    transition-delay: .75s;
+    transition-delay: .6s;
 }
 
 .cell:nth-child(5) .shiftUp{
-    transition-delay: 1s;
+    transition-delay: .8s;
 }
 
-.green {
+div.green {
     background-color: var(--correct-colour);
 }
 
-.yellow {
+div.yellow {
     background-color: var(--partial-colour);
 }
 
-.grey {
-    background-color: var(--default-colour);
+div.incorrect {
+    background-color: var(--incorrect-colour);
 }
 
 .spin {

@@ -103,12 +103,6 @@ const Game = () => {
 
     const backspaceKeyHandler = () => {
         if (guesses[currentRow].length !== 0) {
-            setColours(prev => {
-                const result = [...prev]
-                result[currentRow][guesses[currentRow].length - 1] = ""
-                return result
-            })
-
             setGuesses(prev => {
                 const result = [...prev]
                 result[currentRow] = result[currentRow].slice(0, -1)
@@ -122,12 +116,6 @@ const Game = () => {
         if (gameOver || !key.match(`^[A-Z]$`) || guesses[currentRow].length > 4) {
             return
         }
-
-        setColours(prev => {
-            const result = [...prev]
-            result[currentRow][guesses[currentRow].length] = "grey"
-            return result
-        })
 
         setGuesses(prev => {
             const result = [...prev]
@@ -161,15 +149,17 @@ const Game = () => {
 
     const setKeyColour = (key: string, colour: string) => {
         if (colour === "") {
-            colour = "transparent"
+            colour = "incorrect"
         }
 
         if (colour === "green"
             || (colour === "yellow" && keyboardColours.get(key) !== "green")
-            || (colour === "transparent" && !keyboardColours.has(key))) {
+            || (colour === "incorrect" && !keyboardColours.has(key))) {
             setKeyboardColours(keyColours => new Map(keyColours.set(key, colour)))
         }
     }
+
+    const shouldReveal = (row: number) => row < currentRow
 
     const getKeyClasses = (key: string) => {
         const result = key === activeKey ? ["active"] : []
@@ -182,7 +172,7 @@ const Game = () => {
             <header className={styles.header}>
                 <span className={styles.headerLogo}>Wordle</span>
             </header>
-            <Board guesses={guesses} colours={colours} shouldJiggle={shouldJiggle} />
+            <Board guesses={guesses} colours={colours} shouldJiggle={shouldJiggle} shouldReveal={shouldReveal} />
             <ModalBackdrop active={gameOver}>
                 { gameWon ? <GameWonModal startNewGame={startNewGame} /> : <GameLostModal startNewGame={startNewGame} answer={answer} /> }
             </ModalBackdrop>

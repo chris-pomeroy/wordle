@@ -28,6 +28,6 @@
     background-color: var(--default-colour);
 }
 
-.transparent {
-    background-color: var(--transparent-colour);
+.incorrect {
+    background-color: var(--incorrect-colour);
 }
