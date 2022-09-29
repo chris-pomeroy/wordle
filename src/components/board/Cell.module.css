@@ -24,8 +24,6 @@
     left: 0;
     right: 0;
     bottom: 0;
-    transition-property: top, bottom;
-    transition-duration: .4s;
 }
 
 .cell div:first-child {
@@ -33,7 +31,8 @@
 }
 
 .cell .shiftUp {
-    z-index: 1;
+    transition-property: top, bottom;
+    transition-duration: .4s;
     top: -100%;
     bottom: 100%;
 }
