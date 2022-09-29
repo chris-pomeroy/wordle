@@ -1,4 +1,4 @@
-import styles from './ModalBackdrop.module.css'
+import styles from './Modal.module.css'
 
 type Props = {
     active: boolean
