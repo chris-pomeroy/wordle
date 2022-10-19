@@ -12,5 +12,5 @@
   --partial-colour: #b59f3b;
   --incorrect-colour: rgb(70, 70, 70);
   --transparent-colour: rgba(128, 128, 128, .4);
-  --backdrop-colour: rgb(40, 44, 52, .8);
+  --backdrop-colour: rgba(18, 18, 18, .8);
 }
