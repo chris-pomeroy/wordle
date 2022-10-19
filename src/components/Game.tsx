@@ -5,7 +5,8 @@ import GameWonModal from './modal/GameWonModal';
 import { useEffect, useState } from 'react';
 import Board from './board/Board';
 import useLocalStorage from '../hooks/useLocalStorage';
-import answers from '../resources/answers.json'
+import answers from '../resources/answers.json';
+import dictionary from '../resources/dictionary.json';
 import GameLostModal from './modal/GameLostModal';
 
 const Game = () => {
@@ -79,7 +80,7 @@ const Game = () => {
     }, [])
 
     const enterKeyHandler = () => {
-        if (currentRow > 5 || guesses[currentRow].length < 5 || !answers.includes(guesses[currentRow])) {
+        if (currentRow > 5 || guesses[currentRow].length < 5 || !dictionary.includes(guesses[currentRow])) {
             if (!jiggle) {
                 setTimeout(() => setJiggle(false), 500)
             }
