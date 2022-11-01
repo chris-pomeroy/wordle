@@ -60,6 +60,12 @@
     }
 }
 
+.statsRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
 .modalButton {
     border: 2px solid var(--default-colour);
     border-radius: 1rem;

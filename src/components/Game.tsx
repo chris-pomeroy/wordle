@@ -1,6 +1,6 @@
 import styles from './Game.module.css';
 import Keyboard from './keyboard/Keyboard';
-import ModalBackdrop from './modal/ModalBackdrop';
+import ModalBackdrop from './modal/Modal';
 import GameWonModal from './modal/GameWonModal';
 import { useEffect, useState } from 'react';
 import Board from './board/Board';
@@ -8,12 +8,16 @@ import useLocalStorage from '../hooks/useLocalStorage';
 import answers from '../resources/answers.json';
 import dictionary from '../resources/dictionary.json';
 import GameLostModal from './modal/GameLostModal';
+import Modal from './modal/Modal';
 
 const Game = () => {
 
     const [guesses, setGuesses] = useLocalStorage<string[]>("guesses", Array(6).fill(""))
     const [jiggle, setJiggle] = useState(false)
     const [answer, setAnswer] = useLocalStorage<string>("answer", answers[Math.floor(Math.random() * answers.length)])
+
+    const [streak, setStreak] = useLocalStorage("streak", 0)
+    const [maxStreak, setMaxStreak] = useLocalStorage("maxStreak", 0)
 
     const getColoursForGuess = (guess: string) => {
         const guessLetters = guess.split('')
@@ -96,10 +100,16 @@ const Game = () => {
             return result
         })
 
+        if (coloursForGuess.every(colour => colour === "green")) {
+            if (streak >= maxStreak) {
+                setMaxStreak(streak + 1)
+            }
+            setStreak(prev => prev + 1)
+        }
+
         setTimeout(() => guesses[currentRow].split("").forEach((letter, index) => setKeyColour(letter, coloursForGuess[index])), 1500)
 
         setCurrentRow(prev => prev + 1)
-        localStorage.setItem("guesses", JSON.stringify(guesses))
     }
 
     const backspaceKeyHandler = () => {
@@ -137,7 +147,6 @@ const Game = () => {
 
     const startNewGame = () => {
         setGuesses(Array(6).fill(""))
-        localStorage.setItem("guesses", JSON.stringify(Array(6).fill("")))
 
         setColours(Array(6).fill(null).map(() => Array(5).fill("")))
         setCurrentRow(0)
@@ -145,7 +154,6 @@ const Game = () => {
 
         const nextAnswer = answers[Math.floor(Math.random() * answers.length)]
         setAnswer(nextAnswer)
-        localStorage.setItem("answer", nextAnswer)
     }
 
     const setKeyColour = (key: string, colour: string) => {
@@ -174,9 +182,7 @@ const Game = () => {
                 <span className={styles.headerLogo}>Wordle</span>
             </header>
             <Board guesses={guesses} colours={colours} shouldJiggle={shouldJiggle} shouldReveal={shouldReveal} />
-            <ModalBackdrop active={gameOver}>
-                { gameWon ? <GameWonModal startNewGame={startNewGame} /> : <GameLostModal startNewGame={startNewGame} answer={answer} /> }
-            </ModalBackdrop>
+            <Modal active={gameOver} startNewGame={startNewGame} currentStreak={streak} bestStreak={maxStreak} />
             <Keyboard keyHandler={keyHandler} getKeyClasses={getKeyClasses} />
         </>
     )

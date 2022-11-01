@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 
 const useLocalStorage = <T,>(key: string, defaultValue: T) : [T, React.Dispatch<React.SetStateAction<T>>] => {
 
@@ -18,6 +18,14 @@ const useLocalStorage = <T,>(key: string, defaultValue: T) : [T, React.Dispatch<
         localStorage.setItem(key, String(defaultValue))
         return defaultValue
     })
+
+    useEffect(() => {
+        if (defaultValue instanceof Object) {
+            localStorage.setItem(key, JSON.stringify(value))
+        } else {
+            localStorage.setItem(key, String(value))
+        }
+    }, [key, value])
 
     return [value, setValue]
 }
