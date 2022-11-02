@@ -15,6 +15,7 @@ const Game = () => {
 
     const [currentStreak, setCurrentStreak] = useLocalStorage("currentStreak", 0)
     const [bestStreak, setBestStreak] = useLocalStorage("bestStreak", 0)
+    const [statistics, setStatistics] = useLocalStorage("statistics", Array(7).fill(0))
 
     const getColoursForGuess = (guess: string) => {
         const guessLetters = guess.split('')
@@ -102,6 +103,14 @@ const Game = () => {
                 setBestStreak(currentStreak + 1)
             }
             setCurrentStreak(prev => prev + 1)
+        }
+
+        if (currentRow > 4 || coloursForGuess.every(colour => colour === "green")) {
+            setStatistics(prev => {
+                const result = [...prev]
+                result[currentRow]++
+                return result
+            })
         }
 
         if (currentRow > 4 && coloursForGuess.some(colour => colour !== "green")) {
