@@ -1,13 +1,10 @@
 import styles from './Game.module.css';
 import Keyboard from './keyboard/Keyboard';
-import ModalBackdrop from './modal/Modal';
-import GameWonModal from './modal/GameWonModal';
 import { useEffect, useState } from 'react';
 import Board from './board/Board';
 import useLocalStorage from '../hooks/useLocalStorage';
 import answers from '../resources/answers.json';
 import dictionary from '../resources/dictionary.json';
-import GameLostModal from './modal/GameLostModal';
 import Modal from './modal/Modal';
 
 const Game = () => {
@@ -16,8 +13,8 @@ const Game = () => {
     const [jiggle, setJiggle] = useState(false)
     const [answer, setAnswer] = useLocalStorage<string>("answer", answers[Math.floor(Math.random() * answers.length)])
 
-    const [streak, setStreak] = useLocalStorage("streak", 0)
-    const [maxStreak, setMaxStreak] = useLocalStorage("maxStreak", 0)
+    const [currentStreak, setCurrentStreak] = useLocalStorage("currentStreak", 0)
+    const [bestStreak, setBestStreak] = useLocalStorage("bestStreak", 0)
 
     const getColoursForGuess = (guess: string) => {
         const guessLetters = guess.split('')
@@ -101,10 +98,14 @@ const Game = () => {
         })
 
         if (coloursForGuess.every(colour => colour === "green")) {
-            if (streak >= maxStreak) {
-                setMaxStreak(streak + 1)
+            if (currentStreak >= bestStreak) {
+                setBestStreak(currentStreak + 1)
             }
-            setStreak(prev => prev + 1)
+            setCurrentStreak(prev => prev + 1)
+        }
+
+        if (currentRow > 4 && coloursForGuess.some(colour => colour !== "green")) {
+            setCurrentStreak(0)
         }
 
         setTimeout(() => guesses[currentRow].split("").forEach((letter, index) => setKeyColour(letter, coloursForGuess[index])), 1500)
@@ -182,7 +183,7 @@ const Game = () => {
                 <span className={styles.headerLogo}>Wordle</span>
             </header>
             <Board guesses={guesses} colours={colours} shouldJiggle={shouldJiggle} shouldReveal={shouldReveal} />
-            <Modal active={gameOver} startNewGame={startNewGame} currentStreak={streak} bestStreak={maxStreak} />
+            <Modal active={gameOver} startNewGame={startNewGame} currentStreak={currentStreak} bestStreak={bestStreak} />
             <Keyboard keyHandler={keyHandler} getKeyClasses={getKeyClasses} />
         </>
     )

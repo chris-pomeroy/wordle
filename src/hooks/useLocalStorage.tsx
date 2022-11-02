@@ -4,27 +4,15 @@ const useLocalStorage = <T,>(key: string, defaultValue: T) : [T, React.Dispatch<
 
     const [value, setValue] = useState<T>(() => {
         const result = localStorage.getItem(key)
-        if (defaultValue instanceof Object) {
-            if (result) {
-                return JSON.parse(result)
-            }
-            localStorage.setItem(key, JSON.stringify(defaultValue))
-            return defaultValue
-        }
-
         if (result) {
-            return result
+            return JSON.parse(result) as T
         }
-        localStorage.setItem(key, String(defaultValue))
+        localStorage.setItem(key, JSON.stringify(defaultValue))
         return defaultValue
     })
 
     useEffect(() => {
-        if (defaultValue instanceof Object) {
-            localStorage.setItem(key, JSON.stringify(value))
-        } else {
-            localStorage.setItem(key, String(value))
-        }
+        localStorage.setItem(key, JSON.stringify(value))
     }, [key, value])
 
     return [value, setValue]
