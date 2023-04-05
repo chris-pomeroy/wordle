@@ -14,9 +14,11 @@ const Chart = ({statistics} : Props) => {
             {labels.map((label, index) => (
                 <div key={label} className={styles.row}>
                     <div className={styles.label}>{label}</div>
-                    <div className={styles.bar}>
-                        <div style={{width: getWidth(index) + '%'}}></div>
-                    </div>
+                    {statistics[index] !== 0 &&
+                        <div className={styles.bar}>
+                            <div style={{width: getWidth(index) + '%'}}>{statistics[index]}</div>
+                        </div>
+                    }
                 </div>
             ))}
         </div>
