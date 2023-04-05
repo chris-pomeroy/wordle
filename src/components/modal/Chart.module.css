@@ -1,0 +1,23 @@
+.chart {
+    width: 90%;
+}
+
+.label {
+    width: 2ch;
+}
+
+.row {
+    display: flex;
+    justify-content: start;
+    margin: .5rem 2rem;
+}
+
+.bar {
+    display: inline-block;
+    width: 100%;
+}
+
+.bar > div {
+    background-color: grey;
+    height: 100%;
+}
