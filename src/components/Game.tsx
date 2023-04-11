@@ -103,9 +103,6 @@ const Game = () => {
                 setBestStreak(currentStreak + 1)
             }
             setCurrentStreak(prev => prev + 1)
-        }
-
-        if (coloursForGuess.every(colour => colour === "green")) {
             setStatistics(prev => {
                 const result = [...prev]
                 result[currentRow]++
@@ -196,17 +193,23 @@ const Game = () => {
             <header className={styles.header}>
                 <span className={styles.headerLogo}>Wordle</span>
             </header>
-            <Board guesses={guesses} 
+            <Board 
+                guesses={guesses} 
                 colours={colours} 
                 shouldJiggle={shouldJiggle} 
-                shouldReveal={shouldReveal} />
-            <Modal active={gameOver} 
+                shouldReveal={shouldReveal} 
+            />
+            <Modal 
+                active={gameOver} 
                 startNewGame={startNewGame} 
                 currentStreak={currentStreak} 
                 bestStreak={bestStreak} 
-                statistics={statistics} />
-            <Keyboard keyHandler={keyHandler} 
-                getKeyClasses={getKeyClasses} />
+                statistics={statistics} 
+            />
+            <Keyboard 
+                keyHandler={keyHandler} 
+                getKeyClasses={getKeyClasses} 
+            />
         </>
     )
 }
