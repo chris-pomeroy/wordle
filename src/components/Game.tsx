@@ -73,7 +73,7 @@ const Game = () => {
     })
 
     useEffect(() => {
-        guesses.forEach((guess, guessIndex) => {
+        guesses.slice(0, currentRow).forEach((guess, guessIndex) => {
             guess.split("").forEach((letter, letterIndex) => setKeyColour(letter, colours[guessIndex][letterIndex]))
         })
     }, [])
