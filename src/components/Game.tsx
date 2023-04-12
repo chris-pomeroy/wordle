@@ -41,10 +41,7 @@ const Game = () => {
     const [keyboardColours, setKeyboardColours] = useState<Map<string, string>>(new Map())
     const [activeKey, setActiveKey] = useState('')
 
-    const [currentRow, setCurrentRow] = useState(() => {
-        const row = guesses.findIndex(guess => guess === "")
-        return row === -1 ? 6 : row
-    })
+    const [currentRow, setCurrentRow] = useLocalStorage("currentRow", 0)
 
     const gameWon = (currentRow > 0) && colours[currentRow - 1].every(colour => colour === "green")
     const gameOver = currentRow > 5 || gameWon
