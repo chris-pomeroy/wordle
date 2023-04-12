@@ -193,6 +193,9 @@ const Game = () => {
             <header className={styles.header}>
                 <span className={styles.headerLogo}>Wordle</span>
             </header>
+            { gameOver && !gameWon &&
+                <div className={styles.answerPopup}>{answer}</div>
+            }
             <Board 
                 guesses={guesses} 
                 colours={colours} 

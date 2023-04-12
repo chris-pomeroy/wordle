@@ -13,3 +13,14 @@
     user-select: none;
     font-size: x-large;
 }
+
+.answerPopup {
+    position: fixed;
+    top: 5rem;
+    z-index: 1;
+    background-color: white;
+    color: black;
+    padding: .5rem;
+    border-radius: .5rem;
+    user-select: none;
+}
