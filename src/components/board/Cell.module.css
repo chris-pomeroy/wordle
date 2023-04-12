@@ -2,7 +2,7 @@
     width: 20%;
     aspect-ratio: 1 / 1;
     margin: .2rem;
-    border: 1px solid var(--default-colour);
+    border: 1px solid var(--incorrect-colour);
     display: flex;
     align-items: center;
     justify-content: center;
