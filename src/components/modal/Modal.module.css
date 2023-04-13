@@ -43,6 +43,7 @@
     background-color: #121212;
     position: relative;
     bottom: 100%;
+    user-select: none;
 }
 
 .backdrop.active .modal {
@@ -67,10 +68,18 @@
 }
 
 .modalButton {
-    border: 2px solid var(--default-colour);
-    border-radius: 1rem;
-    padding: 1rem;
-    user-select: none;
+    padding: 15px 25px;
+    text-align: center;
     cursor: pointer;
-    margin-bottom: 3rem;
+    outline: none;
+    background-color: #3e8e41;
+    border-radius: 15px;
+    box-shadow: 0 5px #999;
+    user-select: none;
 }
+
+.modalButton:active {
+    box-shadow: none;
+    transform: translateY(3px);
+    box-shadow: 0 2px #666;
+  }
