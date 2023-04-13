@@ -67,6 +67,11 @@
     justify-content: space-evenly;
 }
 
+.buttonRow {
+    display: flex;
+    gap: 2rem;
+}
+
 .modalButton {
     padding: 15px 25px;
     text-align: center;
@@ -76,10 +81,11 @@
     border-radius: 15px;
     box-shadow: 0 5px #999;
     user-select: none;
+    display: flex;
+    align-items: center;
 }
 
 .modalButton:active {
-    box-shadow: none;
     transform: translateY(3px);
     box-shadow: 0 2px #666;
   }
