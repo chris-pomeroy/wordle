@@ -6,5 +6,6 @@
     flex-direction: column;
     margin: auto;
     aspect-ratio: 5 / 6;
-    height: min(420px, 120vw);
+    max-height: min(420px, 120vw);
+    flex: 1 0 auto;
 }
