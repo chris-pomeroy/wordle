@@ -54,23 +54,18 @@ const Modal = ({active, startNewGame, currentStreak, bestStreak, statistics} : P
     `${getStreakEmoji(bestStreak)} best streak: ${bestStreak}\n` +
     `${getWinPercentageEmoji(winPercentage)} win rate: ${winPercentage}%`
 
-    const fallback = () => {
-        navigator.clipboard.writeText(shareText)
-        if (shareButtonText !== "Copied") {
-            setTimeout(() => setShareButtonText("Share"), 2000)
-        }
-        setShareButtonText("Copied")
-    }
-
     const share = () => {
         if (navigator.share) {
             navigator.share({
                 title: "Wordle Statistics",
                 text: shareText
             })
-            .catch(fallback)
         } else {
-            fallback()
+            navigator.clipboard.writeText(shareText)
+            if (shareButtonText !== "Copied") {
+                setTimeout(() => setShareButtonText("Share"), 2000)
+            }
+            setShareButtonText("Copied")
         }
     }
 
