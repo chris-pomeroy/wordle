@@ -48,7 +48,7 @@ const Modal = ({active, startNewGame, currentStreak, bestStreak, statistics} : P
 
     const [shareButtonText, setShareButtonText] = useState("Share")
 
-    const winPercentage = 100 - Math.round(statistics[statistics.length-1] * 100 / statistics.reduce((a, b) => a + b, 0))
+    const winPercentage = Math.round(100 - (statistics[statistics.length-1] * 100 / statistics.reduce((a, b) => a + b, 0)))
     const shareText = 'Wordle Statistics\n\n' +
     `${getStreakEmoji(currentStreak)} current streak: ${currentStreak}\n` +
     `${getStreakEmoji(bestStreak)} best streak: ${bestStreak}\n` +
