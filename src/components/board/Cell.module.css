@@ -1,17 +1,11 @@
 .cell {
-    width: 20%;
-    aspect-ratio: 1 / 1;
     margin: .2rem;
     border: 1px solid var(--incorrect-colour);
-    display: flex;
-    align-items: center;
-    justify-content: center;
     font-weight: bold;
-    display: flex;
-    flex-direction: column;
     overflow: hidden;
     position: relative;
     font-size: 2rem;
+    flex-grow: 1;
 }
 
 .cell div {

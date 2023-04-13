@@ -1,7 +1,7 @@
 .row {
     display: flex;
-    width: 100%;
     position: relative;
+    flex-grow: 1;
 }
 
 .jiggle {
