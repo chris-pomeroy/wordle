@@ -4,7 +4,7 @@
 
 View the live demo [here](https://chris-pomeroy.github.io/wordle/)
 
-Built using React and Typescript
+Built using React with Typescript
 
 ## Available Scripts
 
