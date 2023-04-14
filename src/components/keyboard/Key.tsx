@@ -11,6 +11,9 @@ function Key({letter, onClick, classes}: Props) {
     if (letter === "Enter" || letter === "⌫") {
         classes.push(styles.large)
     }
+    if (letter === "Enter") {
+        classes.push(styles.smallText)
+    }
     return <div className={classes.join(" ")} onClick={onClick}>{letter}</div>
 }
 

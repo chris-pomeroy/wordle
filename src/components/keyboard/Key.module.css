@@ -5,10 +5,17 @@
     user-select: none;
     width: 9%;
     font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .large {
     width: 12%;
+}
+
+.smallText {
+    font-size: small;
 }
 
 .key:active,
