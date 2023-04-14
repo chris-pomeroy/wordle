@@ -8,7 +8,7 @@ type Props = {
     shouldReveal: (index: number) => boolean
 }
 
-const Board = ({guesses, colours, shouldJiggle, shouldReveal} : Props) => {
+function Board({guesses, colours, shouldJiggle, shouldReveal} : Props) {
     return (
         <div className={styles.board}>
             {

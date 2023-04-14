@@ -5,7 +5,7 @@ type Props = {
     classes: string[]
 }
 
-const Key = ({letter, onClick, classes}: Props) => {
+function Key({letter, onClick, classes}: Props) {
     classes = classes.map(className => styles[className])
     classes.push(styles.key)
     if (letter === "↵" || letter === "⌫") {

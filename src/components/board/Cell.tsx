@@ -7,11 +7,13 @@ type Props = {
     reveal: boolean
 }
 
-const Cell = ({letter, colour, spin, reveal} : Props) => (
-    <div className={`${styles.cell} ${spin ? styles.spin : ""}`}>
-        <div className={reveal ? styles.shiftUp : ""}>{letter}</div>
-        <div className={colour ? styles[colour] : styles.incorrect}>{letter}</div>
-    </div>
-)
+function Cell({letter, colour, spin, reveal} : Props) {
+    return (
+        <div className={`${styles.cell} ${spin ? styles.spin : ""}`}>
+            <div className={reveal ? styles.shiftUp : ""}>{letter}</div>
+            <div className={colour ? styles[colour] : styles.incorrect}>{letter}</div>
+        </div>
+    )
+}
 
 export default Cell

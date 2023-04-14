@@ -12,7 +12,7 @@ type Props = {
     statistics: number[]
 }
 
-const getStreakEmoji = (streak: number) => {
+function getStreakEmoji(streak: number) {
     if (streak >= 20) {
         return "🔥"
     }
@@ -28,7 +28,7 @@ const getStreakEmoji = (streak: number) => {
     return "💩"
 }
 
-const getWinPercentageEmoji = (percentage: number) => {
+function getWinPercentageEmoji(percentage: number) {
     if (percentage >= 90) {
         return "🏆"
     }
@@ -44,7 +44,7 @@ const getWinPercentageEmoji = (percentage: number) => {
     return "💩"
 }
 
-const Modal = ({active, startNewGame, currentStreak, bestStreak, statistics} : Props) => {
+function Modal({active, startNewGame, currentStreak, bestStreak, statistics} : Props) {
 
     const [shareButtonText, setShareButtonText] = useState("Share")
 
@@ -54,7 +54,7 @@ const Modal = ({active, startNewGame, currentStreak, bestStreak, statistics} : P
     `${getStreakEmoji(bestStreak)} best streak: ${bestStreak}\n` +
     `${getWinPercentageEmoji(winPercentage)} win rate: ${winPercentage}%`
 
-    const share = () => {
+    function share() {
         if (navigator.share) {
             navigator.share({
                 title: "Wordle Statistics",

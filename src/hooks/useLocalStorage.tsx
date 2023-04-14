@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 
-const useLocalStorage = <T,>(key: string, defaultValue: T) : [T, React.Dispatch<React.SetStateAction<T>>] => {
+function useLocalStorage<T,>(key: string, defaultValue: T) : [T, React.Dispatch<React.SetStateAction<T>>] {
 
     const [value, setValue] = useState<T>(() => {
         const result = localStorage.getItem(key)

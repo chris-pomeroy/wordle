@@ -7,7 +7,7 @@ import answers from '../resources/answers.json';
 import dictionary from '../resources/dictionary.json';
 import Modal from './modal/Modal';
 
-const Game = () => {
+function Game() {
 
     const [guesses, setGuesses] = useLocalStorage<string[]>("guesses", Array(6).fill(""))
     const [jiggle, setJiggle] = useState(false)
@@ -17,7 +17,7 @@ const Game = () => {
     const [bestStreak, setBestStreak] = useLocalStorage("bestStreak", 0)
     const [statistics, setStatistics] = useLocalStorage("statistics", Array(7).fill(0))
 
-    const getColoursForGuess = (guess: string) => {
+    function getColoursForGuess(guess: string) {
         const guessLetters = guess.split('')
         const answerLetters = answer.split('')
         const result : string[] = Array(5).fill("")
@@ -78,7 +78,7 @@ const Game = () => {
         })
     }, [])
 
-    const enterKeyHandler = () => {
+    function enterKeyHandler() {
         if (currentRow > 5 || guesses[currentRow].length < 5 || !dictionary.includes(guesses[currentRow])) {
             if (!jiggle) {
                 setTimeout(() => setJiggle(false), 500)
@@ -121,7 +121,7 @@ const Game = () => {
         setCurrentRow(prev => prev + 1)
     }
 
-    const backspaceKeyHandler = () => {
+    function backspaceKeyHandler() {
         if (guesses[currentRow].length !== 0) {
             setGuesses(prev => {
                 const result = [...prev]
@@ -131,7 +131,7 @@ const Game = () => {
         }
     }
 
-    const letterKeyHandler = (key: string) => {
+    function letterKeyHandler(key: string) {
         key = key.toUpperCase()
         if (gameOver || !key.match(`^[A-Z]$`) || guesses[currentRow].length > 4) {
             return
@@ -144,7 +144,7 @@ const Game = () => {
         })
     }
     
-    const keyHandler = (key: string) => {
+    function keyHandler(key: string) {
         switch(key) {
             case "↵": enterKeyHandler(); return
             case "⌫": backspaceKeyHandler(); return
@@ -152,9 +152,7 @@ const Game = () => {
         }
     }
 
-    const shouldJiggle = (row: number) => jiggle && row === currentRow
-
-    const startNewGame = () => {
+    function startNewGame() {
         setGuesses(Array(6).fill(""))
 
         setColours(Array(6).fill(null).map(() => Array(5).fill("")))
@@ -165,7 +163,7 @@ const Game = () => {
         setAnswer(nextAnswer)
     }
 
-    const setKeyColour = (key: string, colour: string) => {
+    function setKeyColour(key: string, colour: string) {
         if (colour === "") {
             colour = "incorrect"
         }
@@ -177,9 +175,7 @@ const Game = () => {
         }
     }
 
-    const shouldReveal = (row: number) => row < currentRow
-
-    const getKeyClasses = (key: string) => {
+    function getKeyClasses(key: string) {
         const result = key === activeKey ? ["active"] : []
         result.push(keyboardColours.get(key) || "grey")
         return result
@@ -196,8 +192,8 @@ const Game = () => {
             <Board 
                 guesses={guesses} 
                 colours={colours} 
-                shouldJiggle={shouldJiggle} 
-                shouldReveal={shouldReveal} 
+                shouldJiggle={(row: number) => jiggle && row === currentRow} 
+                shouldReveal={(row: number) => row < currentRow} 
             />
             <Modal 
                 active={gameOver} 

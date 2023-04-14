@@ -8,7 +8,7 @@ type Props = {
     reveal: boolean
 }
 
-const Row = ({guess, colours, jiggle, reveal}: Props) => {
+function Row({guess, colours, jiggle, reveal}: Props) {
     const row = guess.split('').concat(Array(5 - guess.length).fill(""))
     const spin = colours.every(colour => colour === "green")
     return (

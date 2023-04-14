@@ -4,10 +4,12 @@ type Props = {
     statistics: number[]
 }
 
-const Chart = ({statistics} : Props) => {
+function Chart({statistics} : Props) {
     const labels = ['1', '2', '3', '4', '5', '6', 'X']
 
-    const getWidth = (index : number) => statistics[index] * 100 / Math.max(...statistics);
+    function getWidth(index : number) {
+        return statistics[index] * 100 / Math.max(...statistics)
+    }
 
     return (
         <div className={styles.chart}>

@@ -6,7 +6,7 @@ type Props = {
     getKeyClasses: (key: string) => string[]
 }
 
-const Keyboard = ({keyHandler, getKeyClasses}: Props) => {
+function Keyboard({keyHandler, getKeyClasses}: Props) {
     
     const keys = [
         ["Q","W","E","R","T","Y","U","I","O","P"],
