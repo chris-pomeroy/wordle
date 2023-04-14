@@ -53,12 +53,14 @@ function Game() {
             }
     
             let {key} = event
-            switch (key) {
-                case "Enter": key = "↵"; break
-                case "Backspace": key = "⌫"
+            if (key === "Backspace") {
+                key = "⌫"
             }
-    
-            key = key.toUpperCase()
+
+            if (key !== "Enter") {
+                key = key.toUpperCase()
+            }
+
             setActiveKey(key)
             keyHandler(key)
         }
@@ -146,7 +148,7 @@ function Game() {
     
     function keyHandler(key: string) {
         switch(key) {
-            case "↵": enterKeyHandler(); return
+            case "Enter": enterKeyHandler(); return
             case "⌫": backspaceKeyHandler(); return
             default: letterKeyHandler(key)
         }

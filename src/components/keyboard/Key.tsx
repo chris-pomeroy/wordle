@@ -8,7 +8,7 @@ type Props = {
 function Key({letter, onClick, classes}: Props) {
     classes = classes.map(className => styles[className])
     classes.push(styles.key)
-    if (letter === "↵" || letter === "⌫") {
+    if (letter === "Enter" || letter === "⌫") {
         classes.push(styles.large)
     }
     return <div className={classes.join(" ")} onClick={onClick}>{letter}</div>
