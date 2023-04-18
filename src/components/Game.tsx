@@ -27,8 +27,9 @@ function Game() {
     const gameOver = currentRow > 5 || gameWon
 
     useEffect(() => {
-        const keyDownEventHandler = ({key}: KeyboardEvent) => {
-            if (!key.match("^([A-Za-z]|Backspace|Enter)$")) {
+        const keyDownEventHandler = (event: KeyboardEvent) => {
+            let key = event.key
+            if (!key.match("^([A-Za-z]|Backspace|Enter)$") || event.metaKey || event.ctrlKey) {
                 return
             }
 
