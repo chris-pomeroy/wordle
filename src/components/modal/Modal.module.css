@@ -71,21 +71,3 @@
     display: flex;
     gap: 2rem;
 }
-
-.modalButton {
-    padding: 15px 25px;
-    text-align: center;
-    cursor: pointer;
-    outline: none;
-    background-color: #3e8e41;
-    border-radius: 15px;
-    box-shadow: 0 5px #999;
-    user-select: none;
-    display: flex;
-    align-items: center;
-}
-
-.modalButton:active {
-    transform: translateY(3px);
-    box-shadow: 0 2px #666;
-  }
