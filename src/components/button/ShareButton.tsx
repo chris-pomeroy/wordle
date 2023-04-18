@@ -9,35 +9,19 @@ type Props = {
 }
 
 function getStreakEmoji(streak: number) {
-    if (streak >= 20) {
-        return "🔥"
-    }
-    if (streak >= 10) {
-        return "🌟"
-    }
-    if (streak >= 5) {
-        return "⭐"
-    }
-    if (streak  >= 1) {
-        return "👍"
-    }
-    return "💩"
+    return streak >= 20 ? "🔥" :
+        streak >= 10 ? "🌟" :
+        streak >= 5 ? "⭐" :
+        streak >= 1 ? "👍" :
+        "💩"
 }
 
 function getWinPercentageEmoji(percentage: number) {
-    if (percentage >= 90) {
-        return "🏆"
-    }
-    if (percentage >= 70) {
-        return "🙌"
-    }
-    if (percentage >= 50) {
-        return "👏"
-    }
-    if (percentage >= 30) {
-        return "👌"
-    }
-    return "💩"
+    return percentage >= 90 ? "🏆" :
+        percentage >= 70 ? "🙌" :
+        percentage >= 50 ? "👏" :
+        percentage >= 30 ? "👌" :
+        "💩";
 }
 
 function ShareButton({statistics, currentStreak, bestStreak} : Props) {
