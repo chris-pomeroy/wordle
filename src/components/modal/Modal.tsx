@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import Chart from './Chart'
 import styles from './Modal.module.css'
 import Statistic from './Statistic'
