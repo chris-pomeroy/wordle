@@ -7,7 +7,7 @@ type Props = {
 function Chart({statistics} : Props) {
     const labels = ['1', '2', '3', '4', '5', '6', 'X']
 
-    function getWidth(index : number) {
+    function getWidth(index: number) {
         return statistics[index] * 100 / Math.max(...statistics)
     }
 

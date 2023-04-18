@@ -10,49 +10,28 @@ import Modal from './modal/Modal';
 function Game() {
 
     const [guesses, setGuesses] = useLocalStorage<string[]>("guesses", Array(6).fill(""))
-    const [jiggle, setJiggle] = useState(false)
     const [answer, setAnswer] = useLocalStorage<string>("answer", answers[Math.floor(Math.random() * answers.length)])
-
-    const [currentStreak, setCurrentStreak] = useLocalStorage("currentStreak", 0)
-    const [bestStreak, setBestStreak] = useLocalStorage("bestStreak", 0)
-    const [statistics, setStatistics] = useLocalStorage("statistics", Array(7).fill(0))
-
-    function getColoursForGuess(guess: string) {
-        const guessLetters = guess.split('')
-        const answerLetters = answer.split('')
-        const result : string[] = Array(5).fill("")
-        guessLetters.forEach((letter, index) => {
-            if (letter === answerLetters[index]) {
-                answerLetters[index] = ''
-                result[index] = 'green'
-            }
-        })
-        guessLetters.forEach((letter, index) => {
-            const answerIndex = answerLetters.indexOf(letter)
-            if (result[index] !== 'green' && answerIndex !== -1) {
-                answerLetters[answerIndex] = ''
-                result[index] = 'yellow'
-            }
-        })
-        return result
-    }
-
-    const [colours, setColours] = useState<string[][]>(Array(6).fill(null).map((_,index) => getColoursForGuess(guesses[index])))
-    const [keyboardColours, setKeyboardColours] = useState<Map<string, string>>(new Map())
-    const [activeKey, setActiveKey] = useState('')
-
     const [currentRow, setCurrentRow] = useLocalStorage("currentRow", 0)
 
-    const gameWon = (currentRow > 0) && colours[currentRow - 1].every(colour => colour === "green")
+    const [statistics, setStatistics] = useLocalStorage("statistics", Array(7).fill(0))
+    const [currentStreak, setCurrentStreak] = useLocalStorage("currentStreak", 0)
+    const [bestStreak, setBestStreak] = useLocalStorage("bestStreak", 0)
+
+    const [cellColours, setCellColours] = useState<string[][]>(Array(6).fill(null).map((_,index) => getColoursForGuess(guesses[index])))
+    const [keyboardColours, setKeyboardColours] = useState<Map<string, string>>(new Map())
+
+    const [activeKey, setActiveKey] = useState('')
+    const [jiggle, setJiggle] = useState(false)
+
+    const gameWon = (currentRow > 0) && cellColours[currentRow - 1].every(colour => colour === "green")
     const gameOver = currentRow > 5 || gameWon
 
     useEffect(() => {
-        const keyDownEventHandler = (event: KeyboardEvent) => {
-            if (event.metaKey || event.ctrlKey) {
+        const keyDownEventHandler = ({key}: KeyboardEvent) => {
+            if (!key.match("^([A-Za-z]|Backspace|Enter)$")) {
                 return
             }
-    
-            let {key} = event
+
             if (key === "Backspace") {
                 key = "⌫"
             }
@@ -76,9 +55,37 @@ function Game() {
 
     useEffect(() => {
         guesses.slice(0, currentRow).forEach((guess, guessIndex) => {
-            guess.split("").forEach((letter, letterIndex) => setKeyColour(letter, colours[guessIndex][letterIndex]))
+            guess.split("").forEach((letter, letterIndex) => setKeyColour(letter, cellColours[guessIndex][letterIndex]))
         })
     }, [])
+
+    function getColoursForGuess(guess: string) {
+        const guessLetters = guess.split('')
+        const answerLetters = answer.split('')
+        const result = Array<string>(5).fill("")
+        guessLetters.forEach((letter, index) => {
+            if (letter === answerLetters[index]) {
+                answerLetters[index] = ''
+                result[index] = 'green'
+            }
+        })
+        guessLetters.forEach((letter, index) => {
+            const answerIndex = answerLetters.indexOf(letter)
+            if (result[index] !== 'green' && answerIndex !== -1) {
+                answerLetters[answerIndex] = ''
+                result[index] = 'yellow'
+            }
+        })
+        return result
+    }
+
+    function keyHandler(key: string) {
+        switch(key) {
+            case "Enter": enterKeyHandler(); return
+            case "⌫": backspaceKeyHandler(); return
+            default: letterKeyHandler(key)
+        }
+    }
 
     function enterKeyHandler() {
         if (currentRow > 5 || guesses[currentRow].length < 5 || !dictionary.includes(guesses[currentRow])) {
@@ -91,7 +98,7 @@ function Game() {
 
         const coloursForGuess = getColoursForGuess(guesses[currentRow])
 
-        setColours(prev => {
+        setCellColours(prev => {
             const result = prev.map(row => row.slice())
             result[currentRow] = coloursForGuess
             return result
@@ -134,35 +141,23 @@ function Game() {
     }
 
     function letterKeyHandler(key: string) {
-        key = key.toUpperCase()
-        if (gameOver || !key.match(`^[A-Z]$`) || guesses[currentRow].length > 4) {
-            return
-        }
-
-        setGuesses(prev => {
-            const result = [...prev]
-            result[currentRow] += key
-            return result
-        })
-    }
-    
-    function keyHandler(key: string) {
-        switch(key) {
-            case "Enter": enterKeyHandler(); return
-            case "⌫": backspaceKeyHandler(); return
-            default: letterKeyHandler(key)
+        if (!gameOver && guesses[currentRow].length < 5) {
+            setGuesses(prev => {
+                const result = [...prev]
+                result[currentRow] += key
+                return result
+            })
         }
     }
 
     function startNewGame() {
         setGuesses(Array(6).fill(""))
 
-        setColours(Array(6).fill(null).map(() => Array(5).fill("")))
+        setCellColours(Array(6).fill(null).map(() => Array(5).fill("")))
         setCurrentRow(0)
         setKeyboardColours(new Map())
 
-        const nextAnswer = answers[Math.floor(Math.random() * answers.length)]
-        setAnswer(nextAnswer)
+        setAnswer(answers[Math.floor(Math.random() * answers.length)])
     }
 
     function setKeyColour(key: string, colour: string) {
@@ -193,7 +188,7 @@ function Game() {
             }
             <Board 
                 guesses={guesses} 
-                colours={colours} 
+                colours={cellColours} 
                 shouldJiggle={(row: number) => jiggle && row === currentRow} 
                 shouldReveal={(row: number) => row < currentRow} 
             />

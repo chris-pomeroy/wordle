@@ -14,7 +14,6 @@ type Props = {
 }
 
 function Modal({active, startNewGame, currentStreak, bestStreak, statistics} : Props) {
-
     return (
         <div className={`${styles.backdrop} ${active ? styles.active : ""}`}>
             <div className={styles.modal}>
