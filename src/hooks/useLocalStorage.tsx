@@ -8,19 +8,19 @@ function useLocalStorage<T,>(key: string, defaultValue: T) : [T, React.Dispatch<
           return item ? JSON.parse(item) : defaultValue
         } catch (error) {
           console.error(`Error retrieving value from local storage: ${error}`)
-          return defaultValue;
+          return defaultValue
         }
-      });
+    })
     
-      useEffect(() => {
+    useEffect(() => {
         try {
           window.localStorage.setItem(key, JSON.stringify(storedValue))
         } catch (error) {
           console.error(`Error storing value in local storage: ${error}`)
         }
-      }, [key, storedValue])
-    
-      return [storedValue, setStoredValue]
+    }, [key, storedValue])
+
+    return [storedValue, setStoredValue]
 }
 
 export default useLocalStorage
