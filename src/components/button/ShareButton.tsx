@@ -30,9 +30,9 @@ function ShareButton({statistics, currentStreak, bestStreak} : Props) {
 
     const winPercentage = Math.round(100 - (statistics[statistics.length-1] * 100 / statistics.reduce((a, b) => a + b, 0)))
     const shareText = 'Wordle Statistics\n\n' +
-    `${getStreakEmoji(currentStreak)} current streak: ${currentStreak}\n` +
-    `${getStreakEmoji(bestStreak)} best streak: ${bestStreak}\n` +
-    `${getWinPercentageEmoji(winPercentage)} win rate: ${winPercentage}%`
+        `${getStreakEmoji(currentStreak)} current streak: ${currentStreak}\n` +
+        `${getStreakEmoji(bestStreak)} best streak: ${bestStreak}\n` +
+        `${getWinPercentageEmoji(winPercentage)} win rate: ${winPercentage}%`
 
     function share() {
         if (navigator.share) {
