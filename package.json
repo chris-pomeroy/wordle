@@ -1,6 +1,6 @@
 {
   "name": "wordle-clone",
-  "homepage": "https://chris-pomeroy.github.io/wordle/#",
+  "homepage": "https://chris-pomeroy.github.io/wordle/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
