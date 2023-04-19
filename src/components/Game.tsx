@@ -21,24 +21,7 @@ function Game() {
     const [jiggle, setJiggle] = useState(false)
 
     const [cellColours, setCellColours] = useState<string[][]>(Array(6).fill(null).map((_,index) => getColoursForGuess(guesses[index])))
-    const [keyboardColours, setKeyboardColours] = useState<Map<string, string>>(() => {
-        const result = new Map<string, string>()
-        guesses.slice(0, currentRow).forEach((guess, rowIndex) => {
-            guess.split("").forEach((letter, columnIndex) => {
-                let colour = cellColours[rowIndex][columnIndex]
-                if (colour === "") {
-                    colour = "incorrect"
-                }
-
-                if (colour === "green"
-                    || (colour === "yellow" && result.get(letter) !== "green")
-                    || (colour === "incorrect" && !result.has(letter))) {
-                    result.set(letter, colour)
-                }
-            })
-        })
-        return result
-    })
+    const [keyboardColours, setKeyboardColours] = useState<Map<string, string>>(() => getKeyboardColours(guesses.slice(0, currentRow), cellColours))
 
     const gameWon = (currentRow > 0) && cellColours[currentRow - 1].every(colour => colour === "green")
     const gameOver = currentRow > 5 || gameWon
@@ -70,6 +53,25 @@ function Game() {
         document.addEventListener("keyup", keyUpEventHandler)
         return () => document.removeEventListener("keyup", keyUpEventHandler)
     })
+
+    function getKeyboardColours(guesses: string[], colours: string[][]) {
+        const result = new Map<string, string>()
+        guesses.forEach((guess, rowIndex) => {
+            guess.split("").forEach((letter, columnIndex) => {
+                let colour = colours[rowIndex][columnIndex]
+                if (colour === "") {
+                    colour = "incorrect"
+                }
+
+                if (colour === "green"
+                    || (colour === "yellow" && result.get(letter) !== "green")
+                    || (colour === "incorrect" && !result.has(letter))) {
+                    result.set(letter, colour)
+                }
+            })
+        })
+        return result
+    }
 
     function getColoursForGuess(guess: string) {
         const guessLetters = guess.split('')
@@ -113,6 +115,7 @@ function Game() {
         setCellColours(prev => {
             const result = prev.map(row => row.slice())
             result[currentRow] = coloursForGuess
+            setTimeout(() => setKeyboardColours(getKeyboardColours(guesses, result)), 1500)
             return result
         })
 
@@ -136,8 +139,6 @@ function Game() {
             })
             setCurrentStreak(0)
         }
-
-        setTimeout(() => guesses[currentRow].split("").forEach((letter, index) => setKeyColour(letter, coloursForGuess[index])), 1500)
 
         setCurrentRow(prev => prev + 1)
     }
@@ -170,18 +171,6 @@ function Game() {
         setKeyboardColours(new Map())
 
         setAnswer(answers[Math.floor(Math.random() * answers.length)])
-    }
-
-    function setKeyColour(key: string, colour: string) {
-        if (colour === "") {
-            colour = "incorrect"
-        }
-
-        if (colour === "green"
-            || (colour === "yellow" && keyboardColours.get(key) !== "green")
-            || (colour === "incorrect" && !keyboardColours.has(key))) {
-            setKeyboardColours(keyColours => new Map(keyColours.set(key, colour)))
-        }
     }
 
     function getKeyClasses(key: string) {
