@@ -11,8 +11,14 @@ type Props = {
 function Board({guesses, colours, shouldJiggle, shouldReveal} : Props) {
     return (
         <div className={styles.board}>
-            {
-                guesses.map((guess, index) => <Row key={index} guess={guess} colours={colours[index]} jiggle={shouldJiggle(index)} reveal={shouldReveal(index)} />)
+            {guesses.map((guess, index) => (
+                <Row
+                    key={index}
+                    guess={guess}
+                    colours={colours[index]}
+                    jiggle={shouldJiggle(index)}
+                    reveal={shouldReveal(index)}
+                />))
             }
         </div>
     )

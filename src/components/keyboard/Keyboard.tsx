@@ -17,8 +17,14 @@ function Keyboard({keyHandler, getKeyClasses}: Props) {
     return (
         <div className={styles.keyboard}>
             {keys.map((row, index) => (
-                <div key={index} className={styles.keyrow}>
-                    {row.map(letter => <Key key={letter} letter={letter} onClick={() => keyHandler(letter)} classes={getKeyClasses(letter)} />)}
+                <div key={index} className={styles.row}>
+                    {row.map(letter => (
+                        <Key
+                            key={letter}
+                            letter={letter}
+                            onClick={() => keyHandler(letter)}
+                            classes={getKeyClasses(letter)}
+                        />))}
                 </div>
             ))}
         </div>
