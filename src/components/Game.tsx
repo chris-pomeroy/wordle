@@ -3,11 +3,11 @@ import Keyboard from './keyboard/Keyboard';
 import { useEffect, useState } from 'react';
 import Board from './board/Board';
 import useLocalStorage from '../hooks/useLocalStorage';
-import answers from '../resources/answers.json';
+import _answers from '../resources/answers.json';
 import dictionary from '../resources/dictionary.json';
 import Modal from './modal/Modal';
 
-function Game() {
+function Game({answers = _answers}) {
 
     const [guesses, setGuesses] = useLocalStorage<string[]>("guesses", Array(6).fill(""))
     const [answer, setAnswer] = useLocalStorage<string>("answer", answers[Math.floor(Math.random() * answers.length)])
@@ -169,11 +169,9 @@ function Game() {
 
     function startNewGame() {
         setGuesses(Array(6).fill(""))
-
         setCellColours(Array(6).fill(null).map(() => Array(5).fill("")))
         setCurrentRow(0)
         setKeyboardColours(new Map())
-
         setAnswer(answers[Math.floor(Math.random() * answers.length)])
     }
 
