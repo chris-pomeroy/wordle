@@ -94,6 +94,10 @@ function Game() {
     }
 
     function keyHandler(key: string) {
+        if (gameOver) {
+            return
+        }
+
         switch(key) {
             case "Enter": enterKeyHandler(); return
             case "⌫": backspaceKeyHandler(); return
@@ -154,7 +158,7 @@ function Game() {
     }
 
     function letterKeyHandler(key: string) {
-        if (!gameOver && guesses[currentRow].length < 5) {
+        if (guesses[currentRow].length < 5) {
             setGuesses(prev => {
                 const result = [...prev]
                 result[currentRow] += key
