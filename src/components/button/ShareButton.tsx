@@ -41,11 +41,12 @@ function ShareButton({statistics, currentStreak, bestStreak} : Props) {
                 text: shareText
             })
         } else {
-            navigator.clipboard.writeText(shareText)
-            if (shareButtonText !== "Copied") {
-                setTimeout(() => setShareButtonText("Share"), 2000)
-            }
-            setShareButtonText("Copied")
+            navigator.clipboard.writeText(shareText).then(() => {
+                if (shareButtonText !== "Copied") {
+                    setTimeout(() => setShareButtonText("Share"), 2000)
+                }
+                setShareButtonText("Copied")
+            })
         }
     }
 
