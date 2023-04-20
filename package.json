@@ -23,6 +23,7 @@
     "deploy" : "npm run test -- --watchAll=false && gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "coverage": "npm run test -- --coverage --watchAll=false",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
