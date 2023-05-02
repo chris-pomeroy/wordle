@@ -1,8 +1,14 @@
-import {render} from '@testing-library/react'
+import {cleanup, render, screen} from '@testing-library/react'
 import Game from '../../components/Game'
 import userEvent from "@testing-library/user-event";
 
 describe('Game', () => {
+
+    afterEach(() => {
+        cleanup()
+        localStorage.clear()
+    })
+
     test('renders without crashing', () => {
         const { getByText } = render(<Game />)
         const gameComponent = getByText('Wordle')
