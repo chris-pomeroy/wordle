@@ -13,7 +13,7 @@ function Game({answers = _answers}) {
     const [answer, setAnswer] = useLocalStorage<string>("answer", answers[Math.floor(Math.random() * answers.length)])
     const [currentRow, setCurrentRow] = useLocalStorage("currentRow", 0)
 
-    const [statistics, setStatistics] = useLocalStorage("statistics", Array(7).fill(0))
+    const [statistics, setStatistics] = useLocalStorage<number[]>("statistics", Array(7).fill(0))
     const [currentStreak, setCurrentStreak] = useLocalStorage("currentStreak", 0)
     const [bestStreak, setBestStreak] = useLocalStorage("bestStreak", 0)
 
