@@ -6,7 +6,17 @@ View the live demo [here](https://chris-pomeroy.github.io/wordle/)
 
 Built using React with TypeScript
 
-## Available Scripts
+## Run using Docker
+
+```
+docker build . -t wordle
+```
+```
+docker run -it -p 3000:3000 --rm wordle
+```
+Then view it in your web browser at [http://localhost:3000](http://localhost:3000)
+
+## Or run using NPM
 
 In the project directory, you can run:
 
