@@ -12,18 +12,18 @@ Built using React with TypeScript
 docker build . -t wordle
 ```
 ```
-docker run -it -p 3000:3000 --rm wordle
+docker run -it -p 5173:5173 --rm wordle
 ```
-Then view it in your web browser at [http://localhost:3000](http://localhost:3000)
+Then view it in your web browser at [http://localhost:5173](http://localhost:5173)
 
 ## Or run using NPM
 
 In the project directory, you can run:
 
-### `npm start`
+### `npm run dev`
 
 Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open [http://localhost:5173](http://localhost:5173) to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.

@@ -10,7 +10,7 @@ WORKDIR /app
 
 COPY public public
 COPY src src
-COPY package.json package-lock.json tsconfig.json ./
+COPY index.html package.json package-lock.json tsconfig.json tsconfig.node.json vite.config.ts ./
 RUN npm ci
 
-CMD npm start
+CMD npm run dev
