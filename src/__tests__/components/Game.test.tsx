@@ -1,4 +1,5 @@
-import {cleanup, render, screen} from '@testing-library/react'
+import {describe, afterEach, it, expect} from "vitest";
+import {cleanup, render} from '@testing-library/react'
 import Game from '../../components/Game'
 import userEvent from "@testing-library/user-event";
 
@@ -9,17 +10,17 @@ describe('Game', () => {
         localStorage.clear()
     })
 
-    test('renders without crashing', () => {
+    it('renders without crashing', () => {
         const { getByText } = render(<Game />)
         const gameComponent = getByText('Wordle')
         expect(gameComponent).toBeInTheDocument()
     })
 
-    test('uses the correct colours', () => {
+    it('uses the correct colours', async () => {
         const { baseElement, container } = render(<Game answers={["SOUND"]} />)
 
-        userEvent.type(baseElement, "SNOUT")
-        userEvent.type(baseElement, "{enter}")
+        await userEvent.type(baseElement, "SNOUT")
+        await userEvent.type(baseElement, "{enter}")
 
         const yellowCells = container.querySelectorAll(".yellow")
         expect(yellowCells).toHaveLength(3)
@@ -28,11 +29,11 @@ describe('Game', () => {
         expect(greenCells).toHaveLength(1)
     })
 
-    test('deals with double letters correctly', () => {
+    it('deals with double letters correctly', async () => {
         const { baseElement, container } = render(<Game answers={["MOOSE"]} />)
 
-        userEvent.type(baseElement, "CROWN")
-        userEvent.type(baseElement, "{enter}")
+        await userEvent.type(baseElement, "CROWN")
+        await userEvent.type(baseElement, "{enter}")
 
         const greenCells = container.querySelectorAll(".green")
         expect(greenCells).toHaveLength(1)

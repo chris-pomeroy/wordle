@@ -13,7 +13,14 @@ function Row({guess, colours, jiggle, reveal}: Props) {
     const spin = colours.every(colour => colour === "green")
     return (
         <div className={`${styles.row} ${jiggle ? styles.jiggle : ""}`}>
-            {row.map((letter, index) => <Cell key={index} letter={letter} colour={colours[index]} spin={spin} reveal={reveal} />)}
+            {row.map((letter, index) =>
+                <Cell
+                    key={index}
+                    letter={letter}
+                    colour={colours[index]}
+                    spin={spin}
+                    reveal={reveal}
+                />)}
         </div>
     )
 }

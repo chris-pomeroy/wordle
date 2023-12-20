@@ -1,10 +1,10 @@
-import React from 'react'
+import {describe, it, expect, vitest} from "vitest";
 import { render, fireEvent, screen } from '@testing-library/react'
 import Button from '../../../components/button/Button'
 
 describe('Button component', () => {
     it('renders correctly with provided props', () => {
-        const onClickMock = jest.fn()
+        const onClickMock = vitest.fn()
         const buttonText = 'Click me'
         render(<Button onClick={onClickMock} text={buttonText} />)
 
@@ -13,7 +13,7 @@ describe('Button component', () => {
     })
 
     it('calls onClick prop when clicked', () => {
-        const onClickMock = jest.fn()
+        const onClickMock = vitest.fn()
         const buttonText = 'Click me'
         render(<Button onClick={onClickMock} text={buttonText} />)
 

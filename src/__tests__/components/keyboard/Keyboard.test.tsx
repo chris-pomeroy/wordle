@@ -1,3 +1,4 @@
+import {describe, it, expect, vitest} from "vitest";
 import { render, fireEvent, screen } from '@testing-library/react'
 import Keyboard from '../../../components/keyboard/Keyboard'
 
@@ -13,7 +14,7 @@ describe('Keyboard', () => {
   })
 
   it('should invoke keyHandler with correct letter when key is clicked', () => {
-    const keyHandlerMock = jest.fn()
+    const keyHandlerMock = vitest.fn()
     render(<Keyboard keyHandler={keyHandlerMock} getKeyClasses={() => []} />)
 
     const keyButton = screen.getByText('Q')

@@ -1,8 +1,9 @@
+import {describe, beforeEach, it, expect, vitest} from "vitest";
 import { render, fireEvent, screen } from '@testing-library/react'
 import Key from '../../../components/keyboard/Key'
 
 describe('Key component', () => {
-  const mockOnClick = jest.fn()
+  const mockOnClick = vitest.fn()
 
   const defaultProps = {
     letter: 'A',
@@ -14,7 +15,7 @@ describe('Key component', () => {
     mockOnClick.mockClear()
   })
 
-  test('renders the Key component with correct props', () => {
+  it('renders the Key component with correct props', () => {
     render(<Key {...defaultProps} />)
 
     const key = screen.getByText(defaultProps.letter)
@@ -22,7 +23,7 @@ describe('Key component', () => {
     expect(key).toHaveClass('class1 class2 key', {exact: true})
   })
 
-  test('calls the onClick function when clicked', () => {
+  it('calls the onClick function when clicked', () => {
     render(<Key {...defaultProps} />)
 
     fireEvent.click(screen.getByText(defaultProps.letter))
@@ -30,7 +31,7 @@ describe('Key component', () => {
     expect(mockOnClick).toHaveBeenCalledTimes(1)
   })
 
-  test('adds additional classes for the Enter key', () => {
+  it('adds additional classes for the Enter key', () => {
     render(<Key {...defaultProps} letter="Enter" />)
 
     const key = screen.getByText("Enter")
@@ -38,7 +39,7 @@ describe('Key component', () => {
     expect(key).toHaveClass('smallText')
   })
 
-  test('adds an additional class for the Backspace key', () => {
+  it('adds an additional class for the Backspace key', () => {
     render(<Key {...defaultProps} letter="⌫" />)
 
     expect(screen.getByText("⌫")).toHaveClass('large')
