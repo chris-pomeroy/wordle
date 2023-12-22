@@ -18,6 +18,8 @@ Then view it in your web browser at [http://localhost:5173](http://localhost:517
 
 ## Or run using NPM
 
+Node `v20.9.0` (npm `v10.1.0`)
+
 In the project directory, you can run:
 
 ### `npm run dev`
