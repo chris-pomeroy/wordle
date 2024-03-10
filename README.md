@@ -9,12 +9,16 @@ Built using React with TypeScript
 ## Run using Docker
 
 ```
-docker build . -t wordle
-```
-```
-docker run -it -p 5173:5173 --rm wordle
+docker-compose up
 ```
 Then view it in your web browser at [http://localhost:5173](http://localhost:5173)
+
+Changes can be made to files the `src` and `public` folders, they will be kept in sync and will be hot reloaded by Vite
+
+Remove from Docker afterwards using
+```
+docker-compose down --rmi all
+```
 
 ## Or run using NPM
 
